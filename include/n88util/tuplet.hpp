@@ -74,9 +74,9 @@ namespace n88
       }
 
       /** Returns a pointer to the data. */
-      inline const T* ptr() const {
+      inline const T* data() const {
         return this->m_Data; }
-      inline T* ptr() {
+      inline T* data() {
         return this->m_Data; }
 
       /** Pointer to the last element plus one of the data.  This
