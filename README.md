@@ -7,12 +7,11 @@ Refer to the DOxygen-generated documentation.
 
 ## Compiling and linking
 
-AimIO requires the following:
+n88util requires the following:
 
   * CMake: www.cmake.org
   * Boost: www.boost.org
   * Google test: https://github.com/google/googletest
-
 
 To build and run the tests with cmake, on linux or macOS, something like the
 following sequence of commands is required:
