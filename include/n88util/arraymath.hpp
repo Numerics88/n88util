@@ -12,7 +12,7 @@ template <typename TValue, typename TIndex>
 TValue sum (const n88::array<1,TValue,TIndex>& A)
 {
   TValue s = 0;
-  const TValue* a = A.ptr();
+  const TValue* a = A.data();
   const TValue* const end = A.end();
   while (a != end)
   {
@@ -35,7 +35,7 @@ TValue array_sum (const n88::array<1,TValue,TIndex>& A)
 template <typename TValue, typename TIndex>
 TValue max (const n88::array<1,TValue,TIndex>& A)
 {
-  const TValue* a = A.ptr();
+  const TValue* a = A.data();
   const TValue* const end = A.end();
   TValue m = *a;
   ++a;
@@ -52,7 +52,7 @@ TValue max (const n88::array<1,TValue,TIndex>& A)
 template <typename TValue, typename TIndex>
 TValue min (const n88::array<1,TValue,TIndex>& A)
 {
-  const TValue* a = A.ptr();
+  const TValue* a = A.data();
   const TValue* const end = A.end();
   TValue m = *a;
   ++a;
@@ -68,7 +68,7 @@ TValue min (const n88::array<1,TValue,TIndex>& A)
 template <typename TValue, typename TIndex>
 TValue maxabs (const n88::array<1,TValue,TIndex>& A)
 {
-  const TValue* a = A.ptr();
+  const TValue* a = A.data();
   const TValue* const end = A.end();
   TValue m = fabs(*a);
   ++a;

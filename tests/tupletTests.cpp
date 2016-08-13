@@ -66,7 +66,7 @@ TEST_F (tupletTests, ConstructionFromPointer)
 TEST_F (tupletTests, Pointer)
 {
   tuplet<3,float> d(2.0, 4.0, 6.0);
-  ASSERT_EQ(&(d[2]), d.ptr()+2);
+  ASSERT_EQ(&(d[2]), d.data()+2);
 }
 
 TEST_F (tupletTests, Assignment)
