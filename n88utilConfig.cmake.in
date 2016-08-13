@@ -1,0 +1,16 @@
+# Config file for the n88util package
+#
+# N88UTIL_INCLUDE_DIRS - where to find .h files for n88util
+# N88UTIL_LIBRARIES    - libraries to link against
+
+# Compute paths
+get_filename_component(N88UTIL_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+set(N88UTIL_INCLUDE_DIRS "@CONF_INCLUDE_DIRS@")
+
+# Our library dependencies (contains definitions for IMPORTED targets)
+if(NOT TARGET n88util AND NOT n88util_BINARY_DIR)
+  include("${N88UTIL_CMAKE_DIR}/n88utilTargets.cmake")
+endif()
+
+# These are IMPORTED targets created by n88utilTargets.cmake
+set(N88UTIL_LIBRARIES n88util)
