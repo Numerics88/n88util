@@ -19,6 +19,13 @@ namespace n88
     size_t peak;
   };
 
+  /**
+   * A very elementary class to help you count up when you allocate
+   * memory, and count down when you free it. The special feature of
+   * this class is that the counter is statically allocated per-thread:
+   * every thread gets its own. Thus you can safely use it in multi-threaded
+   * programs without the speed impact of mutexes or atomic operations.
+   */
   class N88UTIL_EXPORT TrackingAllocator
   {
     public:

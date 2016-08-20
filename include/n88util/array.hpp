@@ -395,8 +395,8 @@ namespace n88
   *   float x = new float[100];
   * @endcode
   *
-  * arrays can be dynamically allocated on the heap. Allocation can be
-  * postponed. arrays cannot be resized.
+  * array data can be dynamically allocated. Allocation can be
+  * postponed. arrays cannot be resized non-destructively.
   *
   * arrays can be indexed with multi-dimensional indices.
   *
@@ -406,7 +406,12 @@ namespace n88
   * This implies the following equivalence: A[i,j] = A[i][j].
   * This indexing is consistent with python and numpy.
   *
-  * arrays can also be references to existing memory or arrays.
+  * Memory management is done using an ownership model: a single
+  * array class owns its data if it allocated it, and the data
+  * will be freed when the owner goes out of scope. arrays can also
+  * reference existing memory or arrays. In this case it is up to
+  * the user to make sure that the underlying data does not go
+  * out of scope.
   *
   * If you want an array referring to constant data, the appropriate class
   * to use is const_array. "const array" is not appropriate, as such an
