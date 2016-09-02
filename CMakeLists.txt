@@ -37,7 +37,7 @@ mark_as_advanced (ENABLE_RANGE_CHECKING)
 
 # == Dependencies
 
-find_package (Boost 1.57.0 COMPONENTS
+find_package (Boost 1.56.0 COMPONENTS
     timer program_options thread system REQUIRED)
 if (MSVC)
     add_definitions (-D_CRT_SECURE_NO_WARNINGS)
