@@ -13,6 +13,11 @@ configure_file (
     "${PROJECT_SOURCE_DIR}/n88util_version.h.in"
     "${PROJECT_BINARY_DIR}/n88util_version.h")
 
+# Ensure that CMake behaves predictably
+set (CMAKE_EXPORT_NO_PACKAGE_REGISTRY ON)
+set (CMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY ON)
+set (CMAKE_FIND_PACKAGE_NO_SYSTEM_PACKAGE_REGISTRY ON)
+
 # == Options and dependencies
 
 option (ENABLE_TESTING "Build unit and other tests" OFF)
