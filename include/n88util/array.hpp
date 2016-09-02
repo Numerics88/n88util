@@ -1,4 +1,4 @@
-// Copyright (c) Eric Nodwell
+// Copyright (c) 2010-2016 Eric Nodwell
 // See LICENSE for details.
 
 #ifndef N88UTIL_array_hpp_INCLUDED
@@ -10,12 +10,7 @@
 #include <cstdlib>
 #include <cstring>
 
-#define TRACK_ALLOCATIONS
-#ifdef SUPPRESS_TRACK_ALLOCATIONS
-#undef TRACK_ALLOCATIONS
-#endif
-
-#ifdef TRACK_ALLOCATIONS
+#ifdef N88_TRACK_ALLOCATIONS
 #include "TrackingAllocator.hpp"
 #endif
 
@@ -132,7 +127,7 @@ namespace n88
         this->m_size = long_product(dims);
         this->m_dims = dims;
         try
-#ifdef TRACK_ALLOCATIONS
+#ifdef N88_TRACK_ALLOCATIONS
         { this->m_buffer = (TValue*)TrackingAllocator::allocate(this->m_size*sizeof(TValue)); }
 #else
         { this->m_buffer = new TValue[this->m_size]; }
@@ -221,7 +216,7 @@ namespace n88
       void destruct()
       {
         if (this->m_buffer)
-#ifdef TRACK_ALLOCATIONS
+#ifdef N88_TRACK_ALLOCATIONS
         { TrackingAllocator::release (this->m_buffer, this->m_size*sizeof(TValue)); }
 #else
         { delete[] this->m_buffer; }

@@ -1,19 +1,28 @@
 include_directories ("${GTEST_INCLUDE_DIR}")
 include_directories ("${CMAKE_CURRENT_SOURCE_DIR}/../include")
 
-add_executable (n88utilTests
+set (SRC
     tupletTests.cpp
     arrayTests.cpp
     const_arrayTests.cpp
     binhexTests.cpp ../source/binhex.cpp
     textTests.cpp ../source/text.cpp
-    ../source/TrackingAllocator.cpp
     )
 
+if (ENABLE_TrackingAllocator)
+    set (SRC ${SRC} ../source/TrackingAllocator.cpp)
+endif()
+
+add_executable (n88utilTests ${SRC})
+
 target_link_libraries (n88utilTests
-    ${GTEST_BOTH_LIBRARIES}
-    ${Boost_THREAD_LIBRARY}
-    ${Boost_SYSTEM_LIBRARY})
+    ${GTEST_BOTH_LIBRARIES})
+
+if (ENABLE_TrackingAllocator)
+    target_link_libraries (n88utilTests
+        ${Boost_THREAD_LIBRARY}
+        ${Boost_SYSTEM_LIBRARY})
+endif()
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     target_link_libraries (n88utilTests pthread)

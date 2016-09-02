@@ -13,14 +13,7 @@ configure_file (
     "${PROJECT_SOURCE_DIR}/n88util_version.h.in"
     "${PROJECT_BINARY_DIR}/n88util_version.h")
 
-# === Source code files
-
-set (SRC
-  source/binhex.cpp
-  source/text.cpp
-  source/TrackingAllocator.cpp)
-
-# === Testing
+# == Options and dependencies
 
 option (ENABLE_TESTING "Build unit and other tests" OFF)
 if (ENABLE_TESTING)
@@ -34,11 +27,15 @@ if (ENABLE_RANGE_CHECKING)
 endif (ENABLE_RANGE_CHECKING)
 mark_as_advanced (ENABLE_RANGE_CHECKING)
 
+set (boost_components timer program_options)
 
-# == Dependencies
+option (ENABLE_TrackingAllocator "Enable TrackingAllocator." OFF)
+if (ENABLE_TrackingAllocator)
+    set (boost_components ${boost_components} thread system)
+    add_definitions (-DN88_TRACK_ALLOCATIONS)
+endif()
 
-find_package (Boost 1.56.0 COMPONENTS
-    timer program_options thread system REQUIRED)
+find_package (Boost 1.56.0 COMPONENTS ${boost_components} REQUIRED)
 if (MSVC)
     add_definitions (-D_CRT_SECURE_NO_WARNINGS)
 endif (MSVC)
@@ -54,6 +51,16 @@ include_directories ("${PROJECT_BINARY_DIR}")
 
 option (BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
+# === Source code files
+
+set (SRC
+  source/binhex.cpp
+  source/text.cpp)
+
+if (ENABLE_TrackingAllocator)
+    set (SRC ${SRC} source/TrackingAllocator.cpp)
+endif()
+
 # == Create library
 
 include (GenerateExportHeader)
@@ -68,9 +75,13 @@ generate_export_header (n88util)
 
 target_link_libraries (n88util
     ${Boost_TIMER_LIBRARY}
-    ${Boost_PROGRAM_OPTIONS_LIBRARY}
-    ${Boost_THREAD_LIBRARY}
-    ${Boost_SYSTEM_LIBRARY})
+    ${Boost_PROGRAM_OPTIONS_LIBRARY})
+
+if (ENABLE_TrackingAllocator)
+  target_link_libraries (n88util
+      ${Boost_THREAD_LIBRARY}
+      ${Boost_SYSTEM_LIBRARY})
+endif()
 
 # On Linux for glibc < 2.17 need also to link to rt
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
@@ -84,6 +95,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     endif()
 endif()
 
+# === Install
 
 install (TARGETS n88util
          EXPORT n88utilTargets
@@ -99,7 +111,6 @@ install(FILES ${PROJECT_BINARY_DIR}/n88util_export.h DESTINATION include/n88util
 if (ENABLE_TESTING)
     add_subdirectory (tests)
 endif (ENABLE_TESTING)
-
 
 # === CMake config files for importing this project
 
