@@ -27,7 +27,7 @@ if (ENABLE_RANGE_CHECKING)
 endif (ENABLE_RANGE_CHECKING)
 mark_as_advanced (ENABLE_RANGE_CHECKING)
 
-set (boost_components timer program_options)
+set (boost_components timer)
 
 option (ENABLE_TrackingAllocator "Enable TrackingAllocator." OFF)
 if (ENABLE_TrackingAllocator)
@@ -74,8 +74,7 @@ set_target_properties(n88util
 generate_export_header (n88util)
 
 target_link_libraries (n88util
-    ${Boost_TIMER_LIBRARY}
-    ${Boost_PROGRAM_OPTIONS_LIBRARY})
+    ${Boost_TIMER_LIBRARY})
 
 if (ENABLE_TrackingAllocator)
   target_link_libraries (n88util
