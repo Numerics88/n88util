@@ -27,7 +27,12 @@ if (ENABLE_RANGE_CHECKING)
 endif (ENABLE_RANGE_CHECKING)
 mark_as_advanced (ENABLE_RANGE_CHECKING)
 
-set (boost_components timer)
+set (boost_components)
+
+option (ENABLE_TimeStamp "Enable TimeStamp." OFF)
+if (ENABLE_TimeStamp)
+    set (boost_components ${boost_components} timer)
+endif()
 
 option (ENABLE_TrackingAllocator "Enable TrackingAllocator." OFF)
 if (ENABLE_TrackingAllocator)
@@ -73,8 +78,10 @@ set_target_properties(n88util
 
 generate_export_header (n88util)
 
-target_link_libraries (n88util
-    ${Boost_TIMER_LIBRARY})
+if (ENABLE_TimeStamp)
+  target_link_libraries (n88util
+      ${Boost_TIMER_LIBRARY})
+endif()
 
 if (ENABLE_TrackingAllocator)
   target_link_libraries (n88util
