@@ -3,6 +3,9 @@
 Typical random collection of C++ classes and functions that do all the little things
 we need all the time.
 
+![Build Status][build-status]
+
+[build-status]: https://dev.azure.com/babesler/n88/_apis/build/status/Numerics88.n88util?branchName=master
 
 ## Compiling and linking
 
