@@ -4,14 +4,21 @@ jobs:
   pool:
     vmImage: 'macOS-latest'
   steps:
-  - bash: |
-        echo "##vso[task.prependpath]$CONDA/bin"
-        sudo chown -R $USER $CONDA
+  - bash: echo "##vso[task.prependpath]$CONDA/bin"
     displayName: Add conda to path
   - script: |
-        conda create -y -n n88 python=3 conda-build
+      echo "Removing homebrew from Azure to avoid conflicts."
+      curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall > ~/uninstall_homebrew
+      chmod +x ~/uninstall_homebrew
+      ~/uninstall_homebrew -fq
+      rm ~/uninstall_homebrew
+    displayName: Remove homebrew
+  - bash: sudo chown -R $USER $CONDA
+    displayName: Take ownership of conda installation
+  - script: conda create -y -n n88 python=3 conda-build
     displayName: Setup conda
   - script: |
+        set -x
         source activate n88
         conda-build conda-recipe/n88util/
     displayName: Conda build
