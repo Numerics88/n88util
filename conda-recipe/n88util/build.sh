@@ -13,7 +13,10 @@ case $(uname | tr '[:upper:]' '[:lower:]') in
   darwin*)
 		# Get the SDK
 		CMAKE_PLATFORM_FLAGS+=(-DCMAKE_OSX_SYSROOT="${CONDA_BUILD_SYSROOT}")
-    ;;
+
+		# Need to export DYLD_FALLBACK_LIBRARY_PATH for ctest to find boost
+		export DYLD_FALLBACK_LIBRARY_PATH="${BUILD_PREFIX}/lib/:${DYLD_LIBRARY_PATH}"
+		;;
   *)
 esac
 
