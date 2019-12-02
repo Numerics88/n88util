@@ -85,13 +85,15 @@ generate_export_header (n88util)
 
 if (ENABLE_TimeStamp)
   target_link_libraries (n88util
-		Boost::timer
+		PRIVATE
+			Boost::timer
 	)
 endif()
 
 if (ENABLE_TrackingAllocator)
   target_link_libraries (n88util
-		Boost::thread Boost::system
+		PRIVATE
+			Boost::thread Boost::system
 	)
 endif()
 
@@ -102,7 +104,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     if (GLIBC_VERSION)
         if (GLIBC_VERSION VERSION_LESS "2.17")
             find_library (RT_LIBRARY rt)
-            target_link_libraries (n88util rt)
+            target_link_libraries (n88util PRIVATE rt)
         endif ()
     endif()
 endif()
