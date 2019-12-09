@@ -85,13 +85,16 @@ generate_export_header (n88util)
 
 if (ENABLE_TimeStamp)
   target_link_libraries (n88util
-      ${Boost_TIMER_LIBRARY})
+		PRIVATE
+			Boost::timer
+	)
 endif()
 
 if (ENABLE_TrackingAllocator)
   target_link_libraries (n88util
-      ${Boost_THREAD_LIBRARY}
-      ${Boost_SYSTEM_LIBRARY})
+		PRIVATE
+			Boost::thread Boost::system
+	)
 endif()
 
 # On Linux for glibc < 2.17 need also to link to rt
@@ -101,7 +104,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     if (GLIBC_VERSION)
         if (GLIBC_VERSION VERSION_LESS "2.17")
             find_library (RT_LIBRARY rt)
-            target_link_libraries (n88util ${RT_LIBRARY})
+            target_link_libraries (n88util PRIVATE rt)
         endif ()
     endif()
 endif()
@@ -173,7 +176,13 @@ install(FILES
     "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/n88utilConfig.cmake"
     "${PROJECT_BINARY_DIR}/n88utilConfigVersion.cmake"
     DESTINATION "${INSTALL_CMAKE_DIR}" COMPONENT dev)
- 
+
 # Install the export set for use with the install-tree
-install(EXPORT n88utilTargets DESTINATION
-  "${INSTALL_CMAKE_DIR}" COMPONENT dev)
+install(EXPORT n88utilTargets
+	NAMESPACE
+		n88util::
+	DESTINATION
+  	"${INSTALL_CMAKE_DIR}"
+	COMPONENT
+		dev
+)
