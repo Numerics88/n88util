@@ -54,7 +54,7 @@ if (WIN32)
     add_definitions (-DBOOST_ALL_NO_LIB)
 endif()
 
-include_directories (${Boost_INCLUDE_DIR})
+include_directories (${Boost_INCLUDE_DIRS})
 include_directories ("${CMAKE_SOURCE_DIR}/include")
 # The following is for n88util_version.h
 include_directories ("${PROJECT_BINARY_DIR}")
