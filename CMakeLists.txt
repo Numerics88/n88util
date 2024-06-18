@@ -148,6 +148,7 @@ endforeach()
 
 # Add all targets to the build-tree export set
 export (TARGETS n88util
+    NAMESPACE n88util::
     FILE "${PROJECT_BINARY_DIR}/n88utilTargets.cmake")
 
 # Export the package for use from the build-tree
