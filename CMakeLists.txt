@@ -78,6 +78,7 @@ include (GenerateExportHeader)
 add_library (n88util ${SRC})
 set_target_properties(n88util 
     PROPERTIES
+        POSITION_INDEPENDENT_CODE ON
         VERSION ${N88UTIL_VERSION}
         SOVERSION ${N88UTIL_MAJOR_VERSION}.${N88UTIL_MINOR_VERSION})
 
