@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.1)
+cmake_minimum_required (VERSION 3.5)
 project (n88util)
 
 # === Versioning
@@ -45,7 +45,7 @@ if (ENABLE_TrackingAllocator)
     add_definitions (-DN88_TRACK_ALLOCATIONS)
 endif()
 
-find_package (Boost 1.56.0 COMPONENTS ${boost_components} REQUIRED)
+find_package (Boost 1.70.0 COMPONENTS ${boost_components} CONFIG REQUIRED)
 if (MSVC)
     add_definitions (-D_CRT_SECURE_NO_WARNINGS)
 endif (MSVC)
