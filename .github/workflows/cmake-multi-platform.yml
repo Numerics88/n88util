@@ -2,8 +2,8 @@
 name: CMake on multiple platforms
 
 on:
-#  push:
-#    branches: [ master ]
+  push:
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
