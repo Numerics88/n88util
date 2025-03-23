@@ -21,7 +21,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v3
         with:
           python-version: 3.9
-          environment-file: path/to/conda/env.yaml    # Replace with the path to your conda environment
+          environment-file: conda-recipe/n88util/conda_build_config.yaml    # Replace with the path to your conda environment
           auto-update-conda: false
           auto-activate-base: false
           show-channel-urls: true
