@@ -9,16 +9,17 @@ source:
 build:
   number: 0
 
-# Note, boost has an upperbound right now to hanlde cmake correctly
 requirements:
   build:
+		- python
     - {{ compiler('cxx') }}
-    - cmake >=3.1.0
-    - boost >=1.56,<=1.67
+    - cmake >=3.30.3
+    - boost >=1.85
     - ninja
     - gtest
   run:
-    - boost >=1.56
+		- python
+    - boost >=1.85
 
 about:
   home: https://github.com/Numerics88/n88util
