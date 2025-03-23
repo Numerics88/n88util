@@ -13,5 +13,5 @@ MACOSX_DEPLOYMENT_TARGET:      # [osx]
 CONDA_BUILD_SYSROOT:
   - /opt/MacOSX13.1.sdk        # [osx]
 python:
-	- 3.8
-	- 3.9
+  - 3.8
+  - 3.9
