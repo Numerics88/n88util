@@ -15,3 +15,6 @@ CONDA_BUILD_SYSROOT:
 python:
   - 3.8
   - 3.9
+channels:
+  - default
+	- Numerics88
