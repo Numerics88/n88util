@@ -25,10 +25,10 @@ jobs:
           auto-update-conda: false
           auto-activate-base: false
           show-channel-urls: true
-      - name: Build and upload the conda packages
-        uses: uibcdf/action-build-and-upload-conda-packages@v2.0.0
-        with:
-          meta_yaml_dir: conda-recipe/n88util
-          user: skboyd # Anaconda username (or an Anaconda organization username Numerics88?)
-          token: ${{ secrets.N88UTIL_NUMERICS88 }}
-          upload: false # Update this!
+#      - name: Build and upload the conda packages
+#        uses: uibcdf/action-build-and-upload-conda-packages@v2.0.0
+#        with:
+#          meta_yaml_dir: conda-recipe/n88util
+#          user: skboyd # Anaconda username (or an Anaconda organization username Numerics88?)
+#          token: ${{ secrets.N88UTIL_NUMERICS88 }}
+#          upload: false # Update this!
