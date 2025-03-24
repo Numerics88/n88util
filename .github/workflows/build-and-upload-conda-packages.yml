@@ -32,27 +32,30 @@ jobs:
           auto-activate-base: false
           show-channel-urls: true
 
-      - name: Create Conda Environment
-        run: conda create -y -n n88 python=3 conda-build
+      # - name: Create Conda Environment
+      #   run: conda create -y -n n88 python=3 conda-build
 
-      - name: Activate Conda Environment and Build
-        run: |
-          conda init
-          conda activate n88
-          conda build conda-recipe/n88util/
+      # - name: Activate Conda Environment and Build
+      #   run: |
+      #     conda init
+      #     conda activate n88
+      #     conda build conda-recipe/n88util/
 
-      - name: Save Built Package as Artifact # For Debugging
-        uses: actions/upload-artifact@v4
-        with:
-          name: n88util-Linux
-          path: /usr/share/miniconda/conda-bld/linux-64/*.tar.bz2
-        if: always()
-
-      # - name: Build and upload the conda packages
-      #   uses: uibcdf/action-build-and-upload-conda-packages@v1.4.0
+      # - name: Save Built Package as Artifact # For Debugging
+      #   uses: actions/upload-artifact@v4
       #   with:
-      #     meta_yaml_dir: conda-recipe/n88util
-      #     user: skboyd # Anaconda username (or an Anaconda organization username Numerics88?)
-      #     token: ${{ secrets.N88UTIL_NUMERICS88 }}
-      #     upload: false # UPDATE: Change to true when finished testing
+      #     name: n88util-Linux
+      #     path: /usr/share/miniconda/conda-bld/linux-64/*.tar.bz2
+      #   if: always()
+
+      - name: Install Conda Build
+        run: conda install -y conda-build
+
+      - name: Build and upload the conda packages
+        uses: uibcdf/action-build-and-upload-conda-packages@v1.4.0
+        with:
+          meta_yaml_dir: conda-recipe/n88util
+          user: skboyd # Anaconda username (or an Anaconda organization username Numerics88?)
+          token: ${{ secrets.N88UTIL_NUMERICS88 }}
+          upload: false # UPDATE: Change to true when finished testing
 
