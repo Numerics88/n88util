@@ -1,4 +1,5 @@
 # build-and-upload-conda-packages.yaml
+# Refer to https://github.com/uibcdf/action-build-and-upload-conda-packages
 name: Build and upload platform-specific conda packages
 
 on:
