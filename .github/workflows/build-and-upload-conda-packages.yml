@@ -37,7 +37,7 @@ jobs:
 
       - name: Activate Conda Environment and Build
         run: |
-          source activate n88
+          conda activate n88
           conda build conda-recipe/n88util/
 
       - name: Save Built Package as Artifact # For Debugging
