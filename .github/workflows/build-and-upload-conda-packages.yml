@@ -5,7 +5,7 @@ name: Build and upload platform-specific conda packages
 on:
   push:
     branches:
-      - kean/build-and-publish-ci
+      - kean/ci
   workflow_dispatch: # Allows manual execution of the workflow
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          ref: kean/build-and-publish-ci # UPDATE: Change to master branch when finished testing
+          ref: kean/ci # UPDATE: Change to master branch when finished testing
 
       - name: Conda environment creation and activation
         uses: conda-incubator/setup-miniconda@v3
