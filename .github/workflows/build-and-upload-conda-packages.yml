@@ -32,21 +32,8 @@ jobs:
           auto-activate-base: false
           show-channel-urls: true
 
-      # - name: Create Conda Environment
-      #   run: conda create -y -n n88 python=3 conda-build
-
-      # - name: Activate Conda Environment and Build
-      #   run: |
-      #     conda init
-      #     conda activate n88
-      #     conda build conda-recipe/n88util/
-
-      # - name: Save Built Package as Artifact # For Debugging
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: n88util-Linux
-      #     path: /usr/share/miniconda/conda-bld/linux-64/*.tar.bz2
-      #   if: always()
+      - name: Set GIT_DESCRIBE_TAG
+        run: echo "GIT_DESCRIBE_TAG=$(git describe --tags --always)" >> $GITHUB_ENV # pulls the latest tag from the git repo
 
       - name: Install Conda Build
         run: conda install -y conda-build
@@ -54,8 +41,7 @@ jobs:
       - name: Build and upload the conda packages
         uses: uibcdf/action-build-and-upload-conda-packages@v1.4.0
         with:
-          python-version: 3.9
-          python: 3.9 # uibcdf removed python version but conda build needs it
+          python-version: 3.9 # needed for conda-build
           meta_yaml_dir: conda-recipe/n88util
           user: skboyd # Anaconda username (or an Anaconda organization username Numerics88?)
           token: ${{ secrets.N88UTIL_NUMERICS88 }}
