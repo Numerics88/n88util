@@ -16,5 +16,5 @@ python:
   - 3.8
   - 3.9
 channels:
-  - defaults
   - Numerics88
+  - defaults
