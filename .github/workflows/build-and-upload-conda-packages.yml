@@ -5,7 +5,8 @@ name: Build and upload platform-specific conda packages
 on:
   push:
     branches:
-      - steve/ci
+      - kean/build-and-publish-ci
+  workflow_dispatch: # Allows manual execution of the workflow
 
 jobs:
   conda_deployment:
@@ -13,13 +14,15 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        #os: [macos-latest, ubuntu-latest, windows-latest]
         os: [ubuntu-latest]
+        #os: [macos-latest, ubuntu-latest, windows-latest]
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          ref: steve/ci # UPDATE: Change to master branch when finished testing
+          ref: kean/build-and-publish-ci # UPDATE: Change to master branch when finished testing
+
       - name: Conda environment creation and activation
         uses: conda-incubator/setup-miniconda@v3
         with:
@@ -28,10 +31,25 @@ jobs:
           auto-update-conda: false
           auto-activate-base: false
           show-channel-urls: true
-      - name: Build and upload the conda packages
-        uses: uibcdf/action-build-and-upload-conda-packages@v1.4.0
+
+      - name: Install conda-build
+        run: conda install -c conda-build anaconda-client
+
+      - name: Build conda package
+        run: conda build conda-recipe/n88util
+
+      - name: Save Built Package as Artifact # For Debugging
+        uses: actions/upload-artifact@v2
         with:
-          meta_yaml_dir: conda-recipe/n88util
-          user: skboyd # Anaconda username (or an Anaconda organization username Numerics88?)
-          token: ${{ secrets.N88UTIL_NUMERICS88 }}
-          upload: false # UPDATE: Change to true when finished testing
+          name: n88util-conda-package-${{ matrix.os }}
+          path: /usr/share/miniconda/conda-bld/linux-64/*.tar.bz2
+        if: always()
+
+      # - name: Build and upload the conda packages
+      #   uses: uibcdf/action-build-and-upload-conda-packages@v1.4.0
+      #   with:
+      #     meta_yaml_dir: conda-recipe/n88util
+      #     user: skboyd # Anaconda username (or an Anaconda organization username Numerics88?)
+      #     token: ${{ secrets.N88UTIL_NUMERICS88 }}
+      #     upload: false # UPDATE: Change to true when finished testing
+
