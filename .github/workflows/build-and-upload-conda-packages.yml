@@ -32,11 +32,13 @@ jobs:
           auto-activate-base: false
           show-channel-urls: true
 
-      - name: Install conda-build
-        run: conda install -c conda-build anaconda-client
+      - name: Create Conda Environment
+        run: conda create -y -n n88 python=3 conda-build
 
-      - name: Build conda package
-        run: conda build conda-recipe/n88util
+      - name: Activate Conda Environment and Build
+        run: |
+          source activate n88
+          conda build conda-recipe/n88util/
 
       - name: Save Built Package as Artifact # For Debugging
         uses: actions/upload-artifact@v4
