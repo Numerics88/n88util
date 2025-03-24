@@ -32,8 +32,10 @@ jobs:
           auto-activate-base: false
           show-channel-urls: true
 
-      - name: Set GIT_DESCRIBE_TAG
-        run: echo "GIT_DESCRIBE_TAG=$(git describe --tags --always)" >> $GITHUB_ENV # pulls the latest tag from the git repo
+      - name: Set GIT_DESCRIBE_TAG # This is a custom step to set the GIT_DESCRIBE_TAG environment variable
+        run: |
+          echo "GIT_DESCRIBE_TAG=$(git describe --tags --always)" >> $GITHUB_ENV
+        shell: bash 
 
       - name: Install Conda Build
         run: conda install -y conda-build
