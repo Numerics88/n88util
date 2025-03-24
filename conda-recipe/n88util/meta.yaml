@@ -11,14 +11,12 @@ build:
 
 requirements:
   build:
-    - python
     - {{ compiler('cxx') }}
     - cmake >=3.30.3
     - boost >=1.85
     - ninja
     - gtest
   run:
-    - python
     - boost >=1.85
 
 about:
