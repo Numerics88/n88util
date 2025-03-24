@@ -18,11 +18,13 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: steve/ci # UPDATE: Change to master branch when finished testing
       - name: Conda environment creation and activation
         uses: conda-incubator/setup-miniconda@v3
         with:
           python-version: 3.9
-          environment-file: conda-recipe/n88util/environment.yaml    # Replace with the path to your conda environment
+          environment-file: conda-recipe/n88util/environment.yml  # Path to conda environment file
           auto-update-conda: false
           auto-activate-base: false
           show-channel-urls: true
@@ -32,4 +34,4 @@ jobs:
           meta_yaml_dir: conda-recipe/n88util
           user: skboyd # Anaconda username (or an Anaconda organization username Numerics88?)
           token: ${{ secrets.N88UTIL_NUMERICS88 }}
-          upload: false # Update this!
+          upload: false # UPDATE: Change to true when finished testing
