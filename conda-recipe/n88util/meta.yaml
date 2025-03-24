@@ -4,7 +4,7 @@ package:
   version: {{ GIT_DESCRIBE_TAG | lower | replace("v","") }}
 
 source:
-  path: . # previously: ./../../
+  path: ./../../
 
 build:
   number: 0
