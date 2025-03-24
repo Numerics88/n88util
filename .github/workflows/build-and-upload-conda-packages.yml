@@ -37,6 +37,7 @@ jobs:
 
       - name: Activate Conda Environment and Build
         run: |
+          conda init
           conda activate n88
           conda build conda-recipe/n88util/
 
