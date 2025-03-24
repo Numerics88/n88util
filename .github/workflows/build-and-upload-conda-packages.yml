@@ -39,9 +39,9 @@ jobs:
         run: conda build conda-recipe/n88util
 
       - name: Save Built Package as Artifact # For Debugging
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: n88util-conda-package-${{ matrix.os }}
+          name: n88util-Linux
           path: /usr/share/miniconda/conda-bld/linux-64/*.tar.bz2
         if: always()
 
