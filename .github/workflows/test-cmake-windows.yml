@@ -24,12 +24,18 @@ jobs:
           auto-activate-base: false
           show-channel-urls: true
 
+      - name: Print MSVC path
+        if: runner.os == 'Windows'
+        run: echo "VSINSTALLDIR=$VSINSTALLDIR" >> $GITHUB_ENV
+        shell: bash
+    
       - name: Install Build Tools
         run: conda install -y cmake ninja m2w64-toolchain vs2017_win-64
 
       - name: Set up MSVC environment
+        if: runner.os == 'Windows'
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          call "%VSINSTALLDIR%\VC\Auxiliary\Build\vcvars64.bat"
         shell: cmd
 
       - name: Verify C++ Compiler
