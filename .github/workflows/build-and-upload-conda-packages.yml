@@ -53,6 +53,7 @@ jobs:
         run: conda install -y conda-build m2w64-toolchain vs2017_win-64
 
       - name: Set up MSVC environment
+        if: runner.os == 'Windows'
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
         shell: cmd
