@@ -5,6 +5,8 @@ channels:
   - defaults
 dependencies:
   - python=3.9
+  - {{ compiler('c') }} # Added for Windows
+  - {{ compiler('cxx') }} # Added for Windows
   - cmake >=3.30.3
   - boost >=1.85
   - ninja

@@ -16,6 +16,10 @@ jobs:
       matrix:
         # os: [ubuntu-latest]
         os: [macos-latest, ubuntu-latest, windows-latest]
+        include:
+        - os: macos-latest
+          platform_osx-64: true
+          platform_osx-arm64: true
 
     steps:
       - name: Checkout repo
@@ -35,9 +39,27 @@ jobs:
       - name: Set GIT_DESCRIBE_TAG # This is a custom step to set the GIT_DESCRIBE_TAG environment variable
         run: |
           echo "GIT_DESCRIBE_TAG=$(git describe --tags --always)" >> $GITHUB_ENV
-        shell: bash 
+        shell: bash
 
-      - name: Install Conda Build
+      - name: Setup MSVC Environment (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        shell: cmd
+
+      - name: Set CMake Compiler Paths (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          echo "CMAKE_C_COMPILER=cl.exe" >> $GITHUB_ENV
+          echo "CMAKE_CXX_COMPILER=cl.exe" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Install Windows Build Tools
+        if: runner.os == 'Windows'
+        run: conda install -y conda-build m2w64-toolchain vs2017_win-64
+
+      - name: Install Conda Build (OSX and Linux)
+        if: runner.os != 'Windows'
         run: conda install -y conda-build
 
       - name: Build and upload the conda packages
@@ -48,4 +70,6 @@ jobs:
           user: skboyd # Anaconda username (or an Anaconda organization username Numerics88?)
           token: ${{ secrets.N88UTIL_NUMERICS88 }}
           upload: false # UPDATE: Change to true when finished testing
-
+      
+      - name: Print Conda build output path # more debugging info. 
+        run: conda build conda-recipe/n88util --output
