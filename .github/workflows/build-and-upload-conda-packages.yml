@@ -48,16 +48,14 @@ jobs:
           echo "GIT_DESCRIBE_TAG=$(git describe --tags --always)" >> $GITHUB_ENV
         shell: bash
 
-      - name: Set CMake Compiler Paths (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          echo "CMAKE_C_COMPILER=cl.exe" >> $GITHUB_ENV
-          echo "CMAKE_CXX_COMPILER=cl.exe" >> $GITHUB_ENV
-        shell: bash
-
       - name: Install Windows Build Tools
         if: runner.os == 'Windows'
         run: conda install -y conda-build m2w64-toolchain vs2017_win-64
+
+      - name: Set up MSVC environment
+        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        shell: cmd
 
       - name: Install Conda Build (OSX and Linux)
         if: runner.os != 'Windows'

@@ -1,0 +1,39 @@
+name: Test Windows C++ Compiler
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test_cxx_compiler:
+    name: Test C++ Compiler on Windows
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install Build Tools
+        run: conda install -y cmake ninja m2w64-toolchain vs2017_win-64
+
+      - name: Set up MSVC environment
+        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        shell: cmd
+
+      - name: Verify C++ Compiler
+        run: |
+          cl.exe /?
+        shell: cmd
+
+      - name: Create Build Directory
+        run: mkdir build
+
+      - name: Run CMake Configuration
+        run: |
+          cd build
+          cmake .. -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=cl.exe -DCMAKE_CXX_COMPILER=cl.exe
+        shell: cmd
+
+      - name: Print Environment Variables
+        run: set
+        shell: cmd
