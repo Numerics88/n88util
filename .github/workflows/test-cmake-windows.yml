@@ -15,6 +15,15 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Conda environment creation and activation
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          python-version: 3.9
+          environment-file: conda-recipe/n88util/environment.yml  # Path to conda environment file
+          auto-update-conda: false
+          auto-activate-base: false
+          show-channel-urls: true
+
       - name: Install Build Tools
         run: conda install -y cmake ninja m2w64-toolchain vs2017_win-64
 
