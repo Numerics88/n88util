@@ -14,12 +14,19 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # os: [ubuntu-latest]
-        os: [macos-latest, ubuntu-latest, windows-latest]
         include:
-        - os: macos-latest
-          platform_osx-64: true
-          platform_osx-arm64: true
+          - os: macos-latest
+            arch: x64
+            conda_subdir: osx-64
+          - os: macos-latest
+            arch: arm64
+            conda_subdir: osx-arm64
+          - os: ubuntu-latest
+            arch: x64
+            conda_subdir: linux-64
+          - os: windows-latest
+            arch: x64
+            conda_subdir: win-64
 
     steps:
       - name: Checkout repo
@@ -40,12 +47,6 @@ jobs:
         run: |
           echo "GIT_DESCRIBE_TAG=$(git describe --tags --always)" >> $GITHUB_ENV
         shell: bash
-
-      - name: Setup MSVC Environment (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-        shell: cmd
 
       - name: Set CMake Compiler Paths (Windows)
         if: runner.os == 'Windows'
