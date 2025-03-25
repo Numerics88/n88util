@@ -15,18 +15,16 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Conda environment creation and activation
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          python-version: 3.9
-          environment-file: conda-recipe/n88util/environment.yml  # Path to conda environment file
-          auto-update-conda: false
-          auto-activate-base: false
-          show-channel-urls: true
-
       - name: Look for MSVC path
         run: |
           dir "C:\Program Files (x86)\Microsoft Visual Studio"
+        shell: cmd
+
+      - name: Setup MSVC Environment (Windows)
+        if: runner.os == 'Windows'
+        run: |
+            for /f "usebackq tokens=*" %%i in (`"C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -latest -property installationPath`) do set VS_PATH=%%i
+            call "%VS_PATH%\VC\Auxiliary\Build\vcvars64.bat"
         shell: cmd
 
       - name: Print Environment Variables
