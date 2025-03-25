@@ -11,11 +11,11 @@ build:
 
 requirements:
   build:
-    - {{ compiler('cxx') }}
     - cmake >=3.30.3
     - boost >=1.85
     - ninja
     - gtest
+    - {{ compiler('cxx') }}
   run:
     - boost >=1.85
 

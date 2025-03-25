@@ -48,15 +48,16 @@ jobs:
           echo "GIT_DESCRIBE_TAG=$(git describe --tags --always)" >> $GITHUB_ENV
         shell: bash
 
+      - name: Install Conda Build
+        run: conda install -y conda-build
+
       - name: Setup MSVC Environment (Windows)
         if: runner.os == 'Windows'
         run: |
             for /f "usebackq tokens=*" %%i in (`"C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -latest -property installationPath`) do set VS_PATH=%%i
             call "%VS_PATH%\VC\Auxiliary\Build\vcvars64.bat"
+            set >> %GITHUB_ENV%
         shell: cmd
-
-      - name: Install Conda Build
-        run: conda install -y conda-build
 
       - name: Build and upload the conda packages
         uses: uibcdf/action-build-and-upload-conda-packages@v1.4.0
