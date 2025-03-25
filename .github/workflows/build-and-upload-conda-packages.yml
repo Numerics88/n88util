@@ -48,10 +48,6 @@ jobs:
           echo "GIT_DESCRIBE_TAG=$(git describe --tags --always)" >> $GITHUB_ENV
         shell: bash
 
-      - name: Install Windows Build Tools
-        if: runner.os == 'Windows'
-        run: conda install -y conda-build m2w64-toolchain vs2017_win-64
-
       - name: Setup MSVC Environment (Windows)
         if: runner.os == 'Windows'
         run: |
@@ -59,8 +55,7 @@ jobs:
             call "%VS_PATH%\VC\Auxiliary\Build\vcvars64.bat"
         shell: cmd
 
-      - name: Install Conda Build (OSX and Linux)
-        if: runner.os != 'Windows'
+      - name: Install Conda Build
         run: conda install -y conda-build
 
       - name: Build and upload the conda packages
