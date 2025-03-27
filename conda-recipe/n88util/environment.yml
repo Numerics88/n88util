@@ -4,7 +4,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.9
+  - python >=3.9,<3.12
   - cmake >=3.30.3
   - boost >=1.85
   - ninja
