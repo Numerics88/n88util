@@ -14,13 +14,16 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest, macos-latest-x64, windows-latest]
         python-version: ["3.9", "3.10", "3.11"]
-        arch-conda-subdir:
-          - { arch: x64, conda_subdir: osx-64 }
-          - { arch: arm64, conda_subdir: osx-arm64 }
-          - { arch: x64, conda_subdir: linux-64 }
-          - { arch: x64, conda_subdir: win-64 }
+        include:
+          - os: macos-latest
+            architecture: arm64
+          - os: macos-latest-x64
+            architecture: x64
+        exclude:
+          - os: macos-latest-x64  # Prevent duplicate macos-latest runs
+
 
     steps:
       - name: Checkout repo
