@@ -20,7 +20,7 @@ jobs:
         # os: ["windows-latest", "macos-13", "macos-latest", "ubuntu-latest"]
         # python-version: ["3.9", "3.10", "3.11"]
         os: ["ubuntu-latest"]
-        python-version: ["3.9"]
+        python-version: ["3.11"]
         
 
     steps:
@@ -70,13 +70,20 @@ jobs:
           token: ${{ secrets.N88UTIL_NUMERICS88 }}
           upload: false # UPDATE: Change to true when finished testing
 
+      - name: Debug Conda Build Outputs
+        run: |
+          echo "Paths: ${{ steps.conda-build-and-upload.outputs.paths }}"
+
       - name: Re-format output paths
         id: reformat-paths
         run: |
-            paths=$(tr ' ' '\n' <<< "${{steps.conda-build-and-upload.outputs.paths}}")
-            echo "newline-separated-paths=$paths" >> $GITHUB_OUTPUT
-            echo "newline-separated-paths=$paths"
-        shell: bash
+          if [ -z "${{ steps.conda-build-and-upload.outputs.paths }}" ]; then
+            echo "No paths found for Conda artifacts."
+            exit 1
+          fi
+          paths=$(tr ' ' '\n' <<< "${{ steps.conda-build-and-upload.outputs.paths }}")
+          echo "newline-separated-paths=$paths" >> $GITHUB_OUTPUT
+
       - name: Upload Conda artifact
         uses: actions/upload-artifact@v4
         with:
