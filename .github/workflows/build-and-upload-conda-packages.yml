@@ -16,8 +16,11 @@ jobs:
       matrix:
         # OS types: Windows x64, macOS 13 (last intel based runner), macOS latest (Apple silicon), and Ubuntu x64
         # Python versions: 3.9, 3.10, and 3.11
-        os: ["windows-latest", "macos-13", "macos-latest", "ubuntu-latest"]
-        python-version: ["3.9", "3.10", "3.11"]
+        # ------------------------------------------------------
+        # os: ["windows-latest", "macos-13", "macos-latest", "ubuntu-latest"]
+        # python-version: ["3.9", "3.10", "3.11"]
+        os: ["ubuntu-latest"]
+        python-version: ["3.9"]
         
 
     steps:
@@ -67,13 +70,15 @@ jobs:
           token: ${{ secrets.N88UTIL_NUMERICS88 }}
           upload: false # UPDATE: Change to true when finished testing
 
-      - name: Find Conda build output path
-        id: conda_output
-        run: echo "PACKAGE_PATH=$(conda build conda-recipe/n88util --output)" >> $GITHUB_ENV
+      - name: Re-format output paths
+        id: reformat-paths
+        run: |
+            paths=$(tr ' ' '\n' <<< "${{steps.conda-build-and-upload.outputs.paths}}")
+            echo "newline-separated-paths=$paths" >> $GITHUB_OUTPUT
+            echo "newline-separated-paths=$paths"
         shell: bash
-
       - name: Upload Conda artifact
         uses: actions/upload-artifact@v4
         with:
           name: conda-artifact-${{ matrix.os }}-${{ matrix.python-version }}
-          path: ${{ env.PACKAGE_PATH }}
+          path: ${{steps.reformat-paths.outputs.newline-separated-paths}}
