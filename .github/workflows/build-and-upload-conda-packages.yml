@@ -14,27 +14,23 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest-x64, macos-latest-arm64, windows-latest]
+        # run on Windows, macOS x64 intel based, macOS arm64 apple silicon, and Linux
+        os: ["windows-latest", "macos-latest", "macos-11", "ubuntu-latest"]
         python-version: ["3.9", "3.10", "3.11"]
-        include:
-          - os: macos-latest-x64
-            arch: x64
-            conda_subdir: osx-64
-          - os: macos-latest-arm64
-            arch: arm64
-            conda_subdir: osx-arm64
-          - os: ubuntu-latest
-            arch: x64
-            conda_subdir: linux-64
-          - os: windows-latest
-            arch: x64
-            conda_subdir: win-64
+        
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           ref: kean/ci # UPDATE: Change to master branch when finished testing
+      
+      - name: Verify OS type, architecture, and Python version
+        run: |
+          echo "OS: ${{ matrix.os }}"
+          echo "Python version: ${{ matrix.python-version }}"
+          echo "Architecture: $(uname -m)"
+        shell: bash
 
       - name: Conda environment creation and activation
         uses: conda-incubator/setup-miniconda@v3
@@ -69,6 +65,14 @@ jobs:
           user: skboyd # Anaconda username (or an Anaconda organization username Numerics88?)
           token: ${{ secrets.N88UTIL_NUMERICS88 }}
           upload: false # UPDATE: Change to true when finished testing
-      
-      - name: Print Conda build output path # more debugging info. 
-        run: conda build conda-recipe/n88util --output
+
+      - name: Find Conda build output path
+        id: conda_output
+        run: echo "PACKAGE_PATH=$(conda build conda-recipe/n88util --output)" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Upload Conda artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: conda-artifact-${{ matrix.os }}-${{ matrix.python-version }}
+          path: ${{ env.PACKAGE_PATH }}
