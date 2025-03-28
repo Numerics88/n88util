@@ -14,8 +14,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # run on Windows, macOS x64 intel based, macOS arm64 apple silicon, and Linux
-        os: ["windows-latest", "macos-latest", "macos-11", "ubuntu-latest"]
+        # OS types: Windows x64, macOS 13 (last intel based runner), macOS latest (Apple silicon), and Ubuntu x64
+        # Python versions: 3.9, 3.10, and 3.11
+        os: ["windows-latest", "macos-13", "macos-latest", "ubuntu-latest"]
         python-version: ["3.9", "3.10", "3.11"]
         
 
