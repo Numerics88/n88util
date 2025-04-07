@@ -19,8 +19,8 @@ jobs:
         # ------------------------------------------------------
         # os: ["windows-latest", "macos-13", "macos-latest", "ubuntu-latest"]
         # python-version: ["3.9", "3.10", "3.11"]
-        os: ["ubuntu-latest"]
-        python-version: ["3.11"]
+        os: [ubuntu-latest]
+        python-version: ["3.9"]
         
 
     steps:
@@ -62,6 +62,7 @@ jobs:
         shell: cmd
 
       - name: Build and upload the conda packages
+        id: conda-build-and-upload
         uses: uibcdf/action-build-and-upload-conda-packages@v1.4.0
         with:
           python-version: ${{ matrix.python-version }} # needed for conda-build
@@ -70,27 +71,17 @@ jobs:
           token: ${{ secrets.N88UTIL_NUMERICS88 }}
           upload: false # UPDATE: Change to true when finished testing
 
-      - name: Debugging - find and print tar.bz2 files
+      - name: (Debug) Print conda-build-and-upload outputs
         run: |
-          echo "Finding tar.bz2 files in /tmp..."
-          find /tmp -type f -name "*.tar.bz2" -print
+          echo "conda-build-and-upload outputs:"
+          echo "${{ steps.conda-build-and-upload.outputs }}"
         shell: bash
-        continue-on-error: true
 
-      - name: Reformat paths
+      - name: Re-format output paths
         id: reformat-paths
         run: |
-          # Reformat paths to be newline-separated
-          echo "Reformatting paths to be newline-separated..."
-          find /tmp -type f -name "*.tar.bz2" | tr '\n' '\r\n' > $GITHUB_ENV
-          echo "Newline-separated paths saved to GITHUB_ENV"
-        shell: bash
-
-      - name: Print contents of /tmp
-        run: |
-          echo "Contents of /tmp:"
-          ls -l /tmp
-        shell: bash
+            paths=$(tr ' ' '\n' <<< "${{steps.conda-build-and-upload.outputs.paths}}")
+            echo "newline-separated-paths=$paths" >> $GITHUB_OUTPUT
 
       - name: Upload Conda artifact
         uses: actions/upload-artifact@v4
