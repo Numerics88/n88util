@@ -1,0 +1,11 @@
+name: n88
+channels:
+  - Numerics88
+  - conda-forge
+  - defaults
+dependencies:
+  - python >=3.9,<3.12
+  - cmake >=3.30.3
+  - boost >=1.85
+  - ninja
+  - gtest
