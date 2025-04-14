@@ -17,10 +17,8 @@ jobs:
         # OS types: Windows x64, macOS 13 (last intel based runner), macOS latest (Apple silicon), and Ubuntu x64
         # Python versions: 3.9, 3.10, and 3.11
         # ------------------------------------------------------
-        # os: ["windows-latest", "macos-13", "macos-latest", "ubuntu-latest"]
-        # python-version: ["3.9", "3.10", "3.11"]
-        os: [ubuntu-latest]
-        python-version: ["3.9"]
+        os: ["windows-latest", "macos-13", "macos-latest", "ubuntu-latest"]
+        python-version: ["3.9", "3.10", "3.11"]
         
 
     steps:
@@ -73,18 +71,20 @@ jobs:
 
       - name: (Debug) Print conda-build-and-upload outputs
         run: |
-          echo "conda-build-and-upload outputs:"
-          echo "${{ steps.conda-build-and-upload.outputs }}"
+          echo "conda-build-and-upload output paths:"
+          echo "${{ steps.conda-build-and-upload.outputs.paths }}"
         shell: bash
+        continue-on-error: true
 
-      - name: Re-format output paths
-        id: reformat-paths
-        run: |
-            paths=$(tr ' ' '\n' <<< "${{steps.conda-build-and-upload.outputs.paths}}")
-            echo "newline-separated-paths=$paths" >> $GITHUB_OUTPUT
+      # Uncomment the following steps when the conda package is set to be uploaded
+      # - name: Re-format output paths
+      #   id: reformat-paths
+      #   run: |
+      #       paths=$(tr ' ' '\n' <<< "${{steps.conda-build-and-upload.outputs.paths}}")
+      #       echo "newline-separated-paths=$paths" >> $GITHUB_OUTPUT
 
-      - name: Upload Conda artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: conda-artifact-${{ matrix.os }}-${{ matrix.python-version }}
-          path: ${{steps.reformat-paths.outputs.newline-separated-paths}}
+      # - name: Upload Conda artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: conda-artifact-${{ matrix.os }}-${{ matrix.python-version }}
+      #     path: ${{steps.reformat-paths.outputs.newline-separated-paths}}
