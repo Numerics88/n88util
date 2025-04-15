@@ -67,7 +67,7 @@ jobs:
           meta_yaml_dir: conda-recipe/n88util
           user: skboyd # Anaconda username (or an Anaconda organization username Numerics88?)
           token: ${{ secrets.N88UTIL_NUMERICS88 }}
-          upload: false # UPDATE: Change to true when finished testing
+          upload: true
 
       - name: (Debug) Print conda-build-and-upload outputs
         run: |
