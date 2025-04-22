@@ -66,6 +66,7 @@ jobs:
           python-version: ${{ matrix.python-version }} # needed for conda-build
           meta_yaml_dir: conda-recipe/n88util
           user: friedchickean # Anaconda username (or an Anaconda organization username Numerics88?)
+          label: main
           token: ${{ secrets.KEAN_CONDA_TOKEN }}
           upload: true # UPDATE: Change to true when finished testing
 
