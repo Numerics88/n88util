@@ -1,6 +1,6 @@
 
 package:
-  name: n88util
+  name: n88util-test
   version: {{ GIT_DESCRIBE_TAG | lower | replace("v","") }}
 
 source:
@@ -12,12 +12,12 @@ build:
 requirements:
   build:
     - cmake >=3.30.3
-    - boost >=1.85
+    - boost >=1.56
     - ninja
     - gtest
     - {{ compiler('cxx') }}
   run:
-    - boost >=1.85
+    - boost >=1.56
 
 about:
   home: https://github.com/Numerics88/n88util

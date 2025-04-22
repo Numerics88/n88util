@@ -1,6 +1,6 @@
 # build-and-upload-conda-packages.yaml
 # Refer to https://github.com/uibcdf/action-build-and-upload-conda-packages
-name: Build and upload platform-specific conda packages
+name: Conda Publish
 
 on:
   push:
@@ -17,7 +17,9 @@ jobs:
         # OS types: Windows x64, macOS 13 (last intel based runner), macOS latest (Apple silicon), and Ubuntu x64
         # Python versions: 3.9, 3.10, and 3.11
         # ------------------------------------------------------
-        os: ["windows-latest", "macos-13", "macos-latest", "ubuntu-latest"]
+        # os: ["windows-latest", "macos-13", "macos-latest", "ubuntu-latest"]
+        # python-version: ["3.9", "3.10", "3.11"]
+        os: ["macos-latest", "ubuntu-latest"]
         python-version: ["3.9", "3.10", "3.11"]
         
 
@@ -68,7 +70,7 @@ jobs:
           user: friedchickean # Anaconda username (or an Anaconda organization username Numerics88?)
           label: main
           token: ${{ secrets.KEAN_CONDA_TOKEN }}
-          upload: true # UPDATE: Change to true when finished testing
+          upload: true
 
       - name: (Debug) Print conda-build-and-upload outputs
         run: |
@@ -76,6 +78,9 @@ jobs:
           echo "${{ steps.conda-build-and-upload.outputs.paths }}"
         shell: bash
         continue-on-error: true
+
+      - name: Debug Conda Dependency Resolution
+        run: conda create --dry-run -n debug-env n88util -c friedchickean
 
       # Uncomment the following steps when the conda package is set to be uploaded
       # - name: Re-format output paths
