@@ -65,9 +65,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }} # needed for conda-build
           meta_yaml_dir: conda-recipe/n88util
-          user: skboyd # Anaconda username (or an Anaconda organization username Numerics88?)
-          token: ${{ secrets.N88UTIL_NUMERICS88 }}
-          upload: false # UPDATE: Change to true when finished testing
+          user: friedchickean # Anaconda username (or an Anaconda organization username Numerics88?)
+          token: ${{ secrets.KEAN_CONDA_TOKEN }}
+          upload: true # UPDATE: Change to true when finished testing
 
       - name: (Debug) Print conda-build-and-upload outputs
         run: |
@@ -77,14 +77,14 @@ jobs:
         continue-on-error: true
 
       # Uncomment the following steps when the conda package is set to be uploaded
-      # - name: Re-format output paths
-      #   id: reformat-paths
-      #   run: |
-      #       paths=$(tr ' ' '\n' <<< "${{steps.conda-build-and-upload.outputs.paths}}")
-      #       echo "newline-separated-paths=$paths" >> $GITHUB_OUTPUT
+      - name: Re-format output paths
+        id: reformat-paths
+        run: |
+            paths=$(tr ' ' '\n' <<< "${{steps.conda-build-and-upload.outputs.paths}}")
+            echo "newline-separated-paths=$paths" >> $GITHUB_OUTPUT
 
-      # - name: Upload Conda artifact
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: conda-artifact-${{ matrix.os }}-${{ matrix.python-version }}
-      #     path: ${{steps.reformat-paths.outputs.newline-separated-paths}}
+      - name: Upload Conda artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: conda-artifact-${{ matrix.os }}-${{ matrix.python-version }}
+          path: ${{steps.reformat-paths.outputs.newline-separated-paths}}
