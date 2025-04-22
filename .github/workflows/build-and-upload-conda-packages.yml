@@ -53,6 +53,9 @@ jobs:
       - name: Install Conda Build
         run: conda install -y conda-build
 
+      - name: Install anaconda-client
+        run: conda install -y anaconda-client
+
       - name: Setup MSVC Environment (Windows)
         if: runner.os == 'Windows'
         run: |
