@@ -78,14 +78,14 @@ jobs:
         continue-on-error: true
 
       # Uncomment the following steps when the conda package is set to be uploaded
-      - name: Re-format output paths
-        id: reformat-paths
-        run: |
-            paths=$(tr ' ' '\n' <<< "${{steps.conda-build-and-upload.outputs.paths}}")
-            echo "newline-separated-paths=$paths" >> $GITHUB_OUTPUT
+      # - name: Re-format output paths
+      #   id: reformat-paths
+      #   run: |
+      #       paths=$(tr ' ' '\n' <<< "${{steps.conda-build-and-upload.outputs.paths}}")
+      #       echo "newline-separated-paths=$paths" >> $GITHUB_OUTPUT
 
-      - name: Upload Conda artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: conda-artifact-${{ matrix.os }}-${{ matrix.python-version }}
-          path: ${{steps.reformat-paths.outputs.newline-separated-paths}}
+      # - name: Upload Conda artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: conda-artifact-${{ matrix.os }}-${{ matrix.python-version }}
+      #     path: ${{steps.reformat-paths.outputs.newline-separated-paths}}
