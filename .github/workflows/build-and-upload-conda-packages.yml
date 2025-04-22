@@ -5,7 +5,7 @@ name: Build and upload platform-specific conda packages
 on:
   push:
     branches:
-      - master
+      - kean/new-ci # UPDATE: Change to master branch when finished testing
   workflow_dispatch: # Allows manual execution of the workflow
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          ref: kean/ci # UPDATE: Change to master branch when finished testing
+          ref: kean/new-ci # UPDATE: Change to master branch when finished testing
       
       - name: Verify OS type, architecture, and Python version
         run: |
@@ -65,8 +65,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }} # needed for conda-build
           meta_yaml_dir: conda-recipe/n88util
-          user: skboyd # Anaconda username (or an Anaconda organization username Numerics88?)
-          token: ${{ secrets.N88UTIL_NUMERICS88 }}
+          # user: skboyd # Anaconda username (or an Anaconda organization username Numerics88?)
+          # token: ${{ secrets.N88UTIL_NUMERICS88 }}
+          user: friedchickean
+          token: ${{ secrets.KEAN_CONDA_TOKEN }}
           upload: true
 
       - name: (Debug) Print conda-build-and-upload outputs
@@ -77,14 +79,14 @@ jobs:
         continue-on-error: true
 
       # Uncomment the following steps when the conda package is set to be uploaded
-      # - name: Re-format output paths
-      #   id: reformat-paths
-      #   run: |
-      #       paths=$(tr ' ' '\n' <<< "${{steps.conda-build-and-upload.outputs.paths}}")
-      #       echo "newline-separated-paths=$paths" >> $GITHUB_OUTPUT
+      - name: Re-format output paths
+        id: reformat-paths
+        run: |
+            paths=$(tr ' ' '\n' <<< "${{steps.conda-build-and-upload.outputs.paths}}")
+            echo "newline-separated-paths=$paths" >> $GITHUB_OUTPUT
 
-      # - name: Upload Conda artifact
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: conda-artifact-${{ matrix.os }}-${{ matrix.python-version }}
-      #     path: ${{steps.reformat-paths.outputs.newline-separated-paths}}
+      - name: Upload Conda artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: conda-artifact-${{ matrix.os }}-${{ matrix.python-version }}
+          path: ${{steps.reformat-paths.outputs.newline-separated-paths}}
