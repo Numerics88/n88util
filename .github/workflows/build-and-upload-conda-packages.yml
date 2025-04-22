@@ -20,7 +20,7 @@ jobs:
         # os: ["windows-latest", "macos-13", "macos-latest", "ubuntu-latest"]
         # python-version: ["3.9", "3.10", "3.11"]
         os: ["macos-latest", "ubuntu-latest"]
-        python-version: ["3.9", "3.10", "3.11"]
+        python-version: ["3.11"]
         
 
     steps:
@@ -78,9 +78,6 @@ jobs:
           echo "${{ steps.conda-build-and-upload.outputs.paths }}"
         shell: bash
         continue-on-error: true
-
-      - name: Debug Conda Dependency Resolution
-        run: conda create --dry-run -n debug-env n88util -c friedchickean
 
       # Uncomment the following steps when the conda package is set to be uploaded
       # - name: Re-format output paths
