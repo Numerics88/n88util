@@ -17,4 +17,5 @@
 #  - 3.9
 channels:
   - Numerics88
+  - conda-forge
   - defaults
