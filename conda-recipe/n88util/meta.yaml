@@ -16,7 +16,7 @@ requirements:
     - ninja
     - gtest
     - {{ compiler('cxx') }}
-    - libcxx >=12.0.0
+    - libcxx >=12,<20
   run:
     - boost >=1.56
 

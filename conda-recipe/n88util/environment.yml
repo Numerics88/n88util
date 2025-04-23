@@ -1,7 +1,7 @@
 name: n88
 channels:
-  - Numerics88
   - conda-forge
+  - Numerics88
   - defaults
 dependencies:
   - python >=3.9
