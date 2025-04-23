@@ -1,7 +1,7 @@
 
 package:
   name: n88util-test
-  version: {{ GIT_DESCRIBE_TAG | lower | replace("v","") }}
+  version: {{ GIT_RELEASE_TAG | lower | replace("v","") }}
 
 source:
   path: ./../../

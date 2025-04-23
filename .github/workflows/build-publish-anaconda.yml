@@ -1,6 +1,7 @@
 name: build-publish-anaconda
 
 on:
+
     push:
       branches:
         - kean/ci
@@ -16,7 +17,7 @@ jobs:
             # Python versions: 3.9, 3.10, and 3.11
             # ------------------------------------------------------
             os: ["windows-latest", "macos-13", "macos-latest", "ubuntu-latest"]
-            python-minor-version: [9,10,11,12]
+            python-minor-version: [11]
             # os: ["ubuntu-latest"]
             # python-minor-version: [11]
 
@@ -26,9 +27,13 @@ jobs:
             with:
               ref: kean/ci # UPDATE: Change to master branch when finished testing
 
-          - name: Set GIT_DESCRIBE_TAG # This is a custom step to set the GIT_DESCRIBE_TAG environment variable
+          - name: Set GIT_RELEASE_TAG # Fetch and set the latest release tag
+            # run: |
+            #   git fetch --tags
+            #   LATEST_TAG=$(git describe --abbrev=0 --tags)
+            #   echo "GIT_RELEASE_TAG=$LATEST_TAG" >> $GITHUB_ENV
             run: |
-              echo "GIT_DESCRIBE_TAG=$(git describe --tags --always)" >> $GITHUB_ENV
+                echo "GIT_RELEASE_TAG=$(git describe --tags --always)" >> $GITHUB_ENV
             shell: bash
             
           - name: Build and publish
@@ -38,7 +43,7 @@ jobs:
               mamba: false
               python: ${{ matrix.python-minor-version }}
               numpy: '22'
-              channels: friedchickean, Numerics88, conda-forge, defaults
+              channels: Numerics88, conda-forge, defaults, friedchickean
               token: ${{ secrets.KEAN_CONDA_TOKEN }}
               publish: true
               label: main
