@@ -25,6 +25,11 @@ jobs:
             uses: actions/checkout@v4
             with:
               ref: kean/ci # UPDATE: Change to master branch when finished testing
+
+          - name: Set GIT_DESCRIBE_TAG # This is a custom step to set the GIT_DESCRIBE_TAG environment variable
+            run: |
+              echo "GIT_DESCRIBE_TAG=$(git describe --tags --always)" >> $GITHUB_ENV
+            shell: bash
             
           - name: Build and publish
             uses: openalea/action-build-publish-anaconda@v0.1.5
