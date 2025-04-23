@@ -15,10 +15,10 @@ jobs:
             # OS types: Windows x64, macOS 13 (last intel based runner), macOS latest (Apple silicon), and Ubuntu x64
             # Python versions: 3.9, 3.10, and 3.11
             # ------------------------------------------------------
-            # os: ["windows-latest", "macos-13", "macos-latest", "ubuntu-latest"]
-            # python-minor-version: [9,10,11,12]
-            os: ["ubuntu-latest"]
-            python-minor-version: [11]
+            os: ["windows-latest", "macos-13", "macos-latest", "ubuntu-latest"]
+            python-minor-version: [9,10,11,12]
+            # os: ["ubuntu-latest"]
+            # python-minor-version: [11]
 
         steps:
           - name: Checkout repo
@@ -40,5 +40,5 @@ jobs:
               numpy: '22'
               channels: friedchickean, Numerics88, conda-forge, defaults
               token: ${{ secrets.KEAN_CONDA_TOKEN }}
-              publish: false
+              publish: true
               label: main
