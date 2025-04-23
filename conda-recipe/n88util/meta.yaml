@@ -15,11 +15,11 @@ requirements:
     - boost >=1.56
     - ninja
     - gtest
-    # - {{ compiler('cxx') }}
-    - libcxx >=12,<20
+    - libcxx >=12.0<14.0
+    - {{ compiler('cxx') }}
   run:
     - boost >=1.56
-    - libcxx >=12
+    - libcxx >=12.0<14.0
 
 about:
   home: https://github.com/Numerics88/n88util
