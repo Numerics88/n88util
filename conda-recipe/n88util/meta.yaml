@@ -15,11 +15,11 @@ requirements:
     - boost >=1.56
     - ninja
     - gtest
-    - libcxx >=12.0<14.0
+    - libcxx >=12.0,<14.0
     - {{ compiler('cxx') }}
   run:
     - boost >=1.56
-    - libcxx >=12.0<14.0
+    - libcxx >=12.0,<14.0
     - {{ compiler('cxx') }}
 
 about:
