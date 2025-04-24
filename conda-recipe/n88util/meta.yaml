@@ -20,6 +20,7 @@ requirements:
   run:
     - boost >=1.56
     - libcxx >=12.0<14.0
+    - {{ compiler('cxx') }}
 
 about:
   home: https://github.com/Numerics88/n88util

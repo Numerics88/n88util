@@ -27,14 +27,17 @@ jobs:
             with:
               ref: kean/ci # UPDATE: Change to master branch when finished testing
 
-          - name: Set GIT_RELEASE_TAG # Fetch and set the latest release tag
+          - name: Set GIT_RELEASE_TAG # Fetch and set the latest release tag + commit hash
+            run: |
+             git fetch --tags
+             LATEST_TAG=$(git describe --tags --abbrev=0)
+             COMMIT_HASH=$(git rev-parse --short HEAD)
+             echo "GIT_RELEASE_TAG=${LATEST_TAG}-${COMMIT_HASH}" >> $GITHUB_ENV
+            shell: bash
             # run: |
             #   git fetch --tags
             #   LATEST_TAG=$(git describe --abbrev=0 --tags)
             #   echo "GIT_RELEASE_TAG=$LATEST_TAG" >> $GITHUB_ENV
-            run: |
-                echo "GIT_RELEASE_TAG=$(git describe --tags --always)" >> $GITHUB_ENV
-            shell: bash
             
           - name: Build and publish
             uses: openalea/action-build-publish-anaconda@v0.1.5
