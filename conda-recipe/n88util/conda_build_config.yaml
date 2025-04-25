@@ -1,20 +1,17 @@
-#c_compiler:
+# c_compiler:
 #  - gcc                        # [linux]
 #  - clang                      # [osx]
-#  - vs2015                     # [win]
-#cxx_compiler:
+#  - vs2019                     # [win]
+# cxx_compiler:
 #  - gxx                        # [linux]
 #  - clangxx                    # [osx]
 #  - vs2015                     # [win]
-#macos_min_version:             # [osx]
+# macos_min_version:             # [osx]
 #  - 13.1                       # [osx]
-#MACOSX_DEPLOYMENT_TARGET:      # [osx]
+# MACOSX_DEPLOYMENT_TARGET:      # [osx]
 #  - 13.1                       # [osx]
-#CONDA_BUILD_SYSROOT:
+# CONDA_BUILD_SYSROOT:
 #  - /opt/MacOSX13.1.sdk        # [osx]
-#python:
-#  - 3.8
-#  - 3.9
 channels:
   - Numerics88
   - conda-forge
