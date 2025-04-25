@@ -16,9 +16,11 @@ requirements:
     - ninja
     - gtest
     - libcxx <=14.0.6
+    - rhash >=1.4.5
     - {{ compiler('cxx') }}
   host:
     - libcxx <=14.0.6
+    - rhash >=1.4.5
   run:
     - boost >=1.56
     - libcxx <=14.0.6
