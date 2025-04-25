@@ -7,6 +7,6 @@ dependencies:
   - python >=3.9
   - cmake >=3.30.3
   - boost >=1.56
-  - libcxx >=12.0,<14.0
+  - libcxx <=14.0.6
   - ninja
   - gtest

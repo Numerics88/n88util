@@ -12,6 +12,10 @@
 #  - 13.1                       # [osx]
 # CONDA_BUILD_SYSROOT:
 #  - /opt/MacOSX13.1.sdk        # [osx]
+cxx_compiler_version:
+  - 14
+libcxx:
+  - 14.0.6
 channels:
   - Numerics88
   - conda-forge
