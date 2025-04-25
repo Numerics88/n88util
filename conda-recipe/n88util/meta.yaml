@@ -17,6 +17,8 @@ requirements:
     - gtest
     - libcxx <=14.0.6
     - {{ compiler('cxx') }}
+  host:
+    - libcxx <=14.0.6
   run:
     - boost >=1.56
     - libcxx <=14.0.6
