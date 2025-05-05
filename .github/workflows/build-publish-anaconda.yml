@@ -35,6 +35,12 @@ jobs:
             run: |
                 echo "GIT_RELEASE_TAG=$(git describe --tags --always)" >> $GITHUB_ENV
             shell: bash
+
+          - name: Create Conda environment with pinned libcxx
+            run: |
+              conda create -y -n build-env python=3.${{ matrix.python-minor-version }} libcxx=14.0.6
+              source activate build-env
+            shell: bash
             
           - name: Build and publish
             uses: openalea/action-build-publish-anaconda@v0.1.5
