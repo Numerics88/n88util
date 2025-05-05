@@ -14,5 +14,4 @@ clang_variant:
   - default
 channels:
   - Numerics88
-  - conda-forge
   - defaults
