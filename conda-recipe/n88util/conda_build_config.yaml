@@ -7,10 +7,11 @@ cxx_compiler:
   - clangxx                    # [osx]
   - vs2015                     # [win]
 llibcxx:
-  - 14.0.6                    # [linux]
-  - 14.0.6                    # [osx]
-  - 14.0.6                    # [osxarm64]
-  - 14.0.6                    # [win]
+  - 14.0.6
+cxx_compiler_version:
+  - 15.0.7
+clang_variant:
+  - default
 channels:
   - Numerics88
   - conda-forge

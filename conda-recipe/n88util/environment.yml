@@ -1,6 +1,5 @@
 name: n88
 channels:
-  - conda-forge
   - Numerics88
   - defaults
 dependencies:
