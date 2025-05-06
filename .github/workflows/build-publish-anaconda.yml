@@ -25,10 +25,13 @@ jobs:
             if: matrix.os == 'macos-13'
             run: echo "CONDA_BUILD_SYSROOT=/Applications/Xcode_14.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk" >> $GITHUB_ENV
           
-          - name: Set CONDA_BUILD_SYSROOT (MacOS latest)
-            if: matrix.os == 'macos-latest'
-            run: echo "CONDA_BUILD_SYSROOT=/Applications/Xcode_15.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk" >> $GITHUB_ENV
-          
+          - name: Add "conda deactivate" to the start of conda-recipe/n88util/build.sh
+            if: matrix.os == 'macos-13'
+            run: |
+              sed -i '' '1s/^/conda deactivate\n/' conda-recipe/n88util/build.sh
+              sed -i '' '1s/^/conda deactivate\n/' conda-recipe/n88util/bld.bat
+            shell: bash
+
           - name: Checkout repo
             uses: actions/checkout@v4
             with:
