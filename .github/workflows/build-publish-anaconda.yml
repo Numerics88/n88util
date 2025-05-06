@@ -43,19 +43,20 @@ jobs:
             run: |
               if [[ "${{ matrix.os }}" == "macos-13" ]]; then
                 echo "CONDA_BUILD_SYSROOT=/Applications/Xcode_14.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk" >> $GITHUB_ENV
-                sed -i '' 's|CONDA_BUILD_SYSROOT:.*|CONDA_BUILD_SYSROOT: /Applications/Xcode_14.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk|' ./conda-recipe/n88util/conda_build_config.yaml
+                echo "CONDA_BUILD_SYSROOT:" >> ./conda-recipe/n88util/conda_build_config.yaml
+                echo "  - /Applications/Xcode_14.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk" >> ./conda-recipe/n88util/conda_build_config.yaml
               elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
-                XCODE_SDK=$(xcode-select -p)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
+                XCODE_SDK="$(xcode-select -p)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
                 echo "CONDA_BUILD_SYSROOT=$XCODE_SDK" >> $GITHUB_ENV
-                sed -i '' "s|CONDA_BUILD_SYSROOT:.*|CONDA_BUILD_SYSROOT: $XCODE_SDK|" ./conda-recipe/n88util/conda_build_config.yaml
+                echo "CONDA_BUILD_SYSROOT:" >> ./conda-recipe/n88util/conda_build_config.yaml
+                echo "  - $XCODE_SDK" >> ./conda-recipe/n88util/conda_build_config.yaml
               fi
 
-          # - name: Add "conda deactivate" to the start of conda-recipe/n88util/build.sh
-          #   if: matrix.os == 'macos-13'
-          #   run: |
-          #     sed -i '' '2i\
-          #     conda deactivate' ./conda-recipe/n88util/build.sh
-          #   shell: bash
+          - name: (Debug) Echo entire conda_build_config.yaml
+            run: |
+              echo "CONDA_BUILD_CONFIG:"
+              cat ./conda-recipe/n88util/conda_build_config.yaml
+            shell: bash
 
           - name: Fetch all tags
             run: git fetch --tags
