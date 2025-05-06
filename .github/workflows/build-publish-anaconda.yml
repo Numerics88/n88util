@@ -30,20 +30,11 @@ jobs:
             with:
               ref: kean/ci # UPDATE: Change to master branch when finished testing
               fetch-depth: 0 # Fetch all history for all branches and tags
-          
-          - name: (Debug) find n88util directory
-            run: |
-              echo "Current directory: $(pwd)"
-              echo "Contents of current directory:"
-              ls -la
-              echo "Contents of n88util directory:"
-              ls -la n88util
-            shell: bash
 
           - name: Add "conda deactivate" to the start of conda-recipe/n88util/build.sh
             if: matrix.os == 'macos-13'
             run: |
-              sed -i '' '1s/^/conda deactivate\n/' n88util/conda-recipe/n88util/build.sh
+              sed -i '' '1s/^/conda deactivate\n/' ./conda-recipe/n88util/build.sh
             shell: bash
 
           - name: Fetch all tags
