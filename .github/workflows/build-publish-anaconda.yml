@@ -1,4 +1,6 @@
-name: build-publish-anaconda
+# This workflow builds and publishes the conda package to the Numerics88 channel
+# using the openalea/action-build-publish-anaconda action.
+name: Conda Build And Publish
 
 on:
 
@@ -14,12 +16,9 @@ jobs:
         strategy:
           matrix:
             # OS types: Windows x64, macOS 13 (last intel based runner), macOS latest (Apple silicon), and Ubuntu x64
-            # Python versions: 3.9, 3.10, and 3.11
             # ------------------------------------------------------
-            os: ["macos-latest"]
-            python-minor-version: [11]
-            # os: ["ubuntu-latest"]
-            # python-minor-version: [11]
+            os: ["macos-latest", "macos-13", "ubuntu-latest", "windows-latest"]
+            python-minor-version: [9]
 
         steps:
           - name: Checkout repo
@@ -28,12 +27,12 @@ jobs:
               ref: kean/ci # UPDATE: Change to master branch when finished testing
 
           - name: Set GIT_RELEASE_TAG # Fetch and set the latest release tag
-            # run: |
-            #   git fetch --tags
-            #   LATEST_TAG=$(git describe --abbrev=0 --tags)
-            #   echo "GIT_RELEASE_TAG=$LATEST_TAG" >> $GITHUB_ENV
             run: |
-                echo "GIT_RELEASE_TAG=$(git describe --tags --always)" >> $GITHUB_ENV
+              git fetch --tags
+              LATEST_TAG=$(git describe --abbrev=0 --tags)
+              echo "GIT_RELEASE_TAG=$LATEST_TAG" >> $GITHUB_ENV
+            # run: |
+            #     echo "GIT_RELEASE_TAG=$(git describe --tags --always)" >> $GITHUB_ENV
             shell: bash
             
           - name: Build and publish
