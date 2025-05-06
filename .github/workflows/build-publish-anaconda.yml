@@ -24,19 +24,18 @@ jobs:
           - name: Set CONDA_BUILD_SYSROOT (MacOS 13)
             if: matrix.os == 'macos-13'
             run: echo "CONDA_BUILD_SYSROOT=/Applications/Xcode_14.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk" >> $GITHUB_ENV
-          
-          - name: Add "conda deactivate" to the start of conda-recipe/n88util/build.sh
-            if: matrix.os == 'macos-13'
-            run: |
-              sed -i '' '1s/^/conda deactivate\n/' conda-recipe/n88util/build.sh
-              sed -i '' '1s/^/conda deactivate\n/' conda-recipe/n88util/bld.bat
-            shell: bash
 
           - name: Checkout repo
             uses: actions/checkout@v4
             with:
               ref: kean/ci # UPDATE: Change to master branch when finished testing
               fetch-depth: 0 # Fetch all history for all branches and tags
+          
+          - name: Add "conda deactivate" to the start of conda-recipe/n88util/build.sh
+            if: matrix.os == 'macos-13'
+            run: |
+              sed -i '' '1s/^/conda deactivate\n/' n88util/conda-recipe/n88util/build.sh
+            shell: bash
 
           - name: Fetch all tags
             run: git fetch --tags
