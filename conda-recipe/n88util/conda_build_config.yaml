@@ -16,6 +16,4 @@ clang_variant:
 channels:
   - Numerics88
   - defaults
-CONDA_BUILD_SYSROOT:
-  - /Applications/Xcode_14.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk # [osx]
 
