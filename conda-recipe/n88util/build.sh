@@ -41,4 +41,4 @@ ninja install -v
 # Run tests
 ctest -V
 
-conda actiavate
+conda activate
