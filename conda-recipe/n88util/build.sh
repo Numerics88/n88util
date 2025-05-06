@@ -1,5 +1,8 @@
 set -x
 
+# Deactivate conda environment to avoid interference
+conda deactivate
+
 # Create build directory
 mkdir build
 cd build
@@ -37,3 +40,5 @@ ninja install -v
 
 # Run tests
 ctest -V
+
+conda actiavate
