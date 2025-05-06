@@ -34,7 +34,8 @@ jobs:
           - name: Add "conda deactivate" to the start of conda-recipe/n88util/build.sh
             if: matrix.os == 'macos-13'
             run: |
-              sed -i '' '1s/^/conda deactivate\n/' ./conda-recipe/n88util/build.sh
+              sed -i '' '2i\
+              conda deactivate' ./conda-recipe/n88util/build.sh
             shell: bash
 
           - name: Fetch all tags

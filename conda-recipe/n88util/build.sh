@@ -1,4 +1,3 @@
-
 set -x
 
 # Create build directory
