@@ -20,6 +20,11 @@ jobs:
             os: ["macos-13"]
             python-minor-version: [9]
 
+        env:
+          DEVELOPER_DIR: /Applications/Xcode_14.1.0.app
+          CONDA_BUILD_SYSROOT: /Applications/Xcode_14.1.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
+          MACOSX_DEPLOYMENT_TARGET: 13.0
+
         steps:
           - name: (DEBUG) Print /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/ contents
             if: matrix.os == 'macos-13'
