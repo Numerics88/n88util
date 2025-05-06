@@ -1,6 +1,7 @@
 set -x
 
-# Deactivate conda environment to avoid interference
+# Deactivate conda environment to avoid interference.
+# Without deactivating, building fails because conda's environment mismatches the build environemnt. (Uses latest Xcode instead of forced Xcode 14)
 conda deactivate
 
 # Create build directory

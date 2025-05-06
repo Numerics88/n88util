@@ -17,37 +17,13 @@ jobs:
           matrix:
             # OS types: Windows x64, macOS 13 (last intel based runner), macOS latest (Apple silicon), and Ubuntu x64
             # ------------------------------------------------------
-            os: ["macos-13"]
+            os: ["macos-13", "macos-latest", "windows-latest", "ubuntu-latest"]
             python-minor-version: [9]
 
-        env:
-          DEVELOPER_DIR: /Applications/Xcode_14.1.0.app
-          CONDA_BUILD_SYSROOT: /Applications/Xcode_14.1.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
-          MACOSX_DEPLOYMENT_TARGET: 13.0
-
         steps:
-          - name: (DEBUG) Print /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/ contents
-            if: matrix.os == 'macos-13'
-            run: ls -l /Applications/Xcode_14.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/
-            shell: bash
-          - name: Use Xcode 14.1
-            if: matrix.os == 'macos-13'
-            run: echo "DEVELOPER_DIR=/Applications/Xcode_14.1.0.app" >> $GITHUB_ENV
           - name: Set CONDA_BUILD_SYSROOT
             if: matrix.os == 'macos-13'
             run: echo "CONDA_BUILD_SYSROOT=/Applications/Xcode_14.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk" >> $GITHUB_ENV
-          - name: Set Deployment Target
-            if: matrix.os == 'macos-13'
-            run: echo "MACOSX_DEPLOYMENT_TARGET=13.0" >> $GITHUB_ENV
-          - name: (DEBUG) Build Environment
-            if: matrix.os == 'macos-13'
-            run: |
-              echo "DEVELOPER_DIR=$DEVELOPER_DIR"
-              echo "CONDA_BUILD_SYSROOT=$CONDA_BUILD_SYSROOT"
-              clang --version
-              ld -v
-              cmake --version
-            shell: bash
           - name: Checkout repo
             uses: actions/checkout@v4
             with:
