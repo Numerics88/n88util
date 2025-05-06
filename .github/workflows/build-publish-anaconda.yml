@@ -17,7 +17,7 @@ jobs:
           matrix:
             # OS types: Windows x64, macOS 13 (last intel based runner), macOS latest (Apple silicon), and Ubuntu x64
             # ------------------------------------------------------
-            os: ["macos-13", "macos-latest", "windows-latest", "ubuntu-latest"]
+            os: ["macos-13"]
             python-minor-version: [9]
 
         steps:
@@ -31,12 +31,12 @@ jobs:
               ref: kean/ci # UPDATE: Change to master branch when finished testing
               fetch-depth: 0 # Fetch all history for all branches and tags
 
-          - name: Add "conda deactivate" to the start of conda-recipe/n88util/build.sh
-            if: matrix.os == 'macos-13'
-            run: |
-              sed -i '' '2i\
-              conda deactivate' ./conda-recipe/n88util/build.sh
-            shell: bash
+          # - name: Add "conda deactivate" to the start of conda-recipe/n88util/build.sh
+          #   if: matrix.os == 'macos-13'
+          #   run: |
+          #     sed -i '' '2i\
+          #     conda deactivate' ./conda-recipe/n88util/build.sh
+          #   shell: bash
 
           - name: Fetch all tags
             run: git fetch --tags

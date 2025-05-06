@@ -1,5 +1,12 @@
 set -x
 
+# Print CONDA_BUILD_SYSROOT
+echo "CONDA_BUILD_SYSROOT before deactivating: ${CONDA_BUILD_SYSROOT}"
+
+conda deactivate
+
+echo "CONDA_BUILD_SYSROOT after deactivating: ${CONDA_BUILD_SYSROOT}"
+
 # Create build directory
 mkdir build
 cd build
@@ -37,3 +44,5 @@ ninja install -v
 
 # Run tests
 ctest -V
+
+conda deactivate
