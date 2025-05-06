@@ -17,7 +17,7 @@ jobs:
           matrix:
             # OS types: Windows x64, macOS 13 (last intel based runner), macOS latest (Apple silicon), and Ubuntu x64
             # ------------------------------------------------------
-            os: ["macos-13"]
+            os: ["macos-13", "macos-latest"]
             python-minor-version: [9]
 
         steps:
@@ -30,6 +30,25 @@ jobs:
             with:
               ref: kean/ci # UPDATE: Change to master branch when finished testing
               fetch-depth: 0 # Fetch all history for all branches and tags
+
+          - name: (Debug) Echo xcode-select -p
+            run: |
+              echo "xcode-select -p: $(xcode-select -p)"
+              echo "xcodebuild -showsdks: $(xcodebuild -showsdks)"
+              echo "xcodebuild -version: $(xcodebuild -version)"
+            shell: bash
+
+          - name: Set CONDA_BUILD_SYSROOT dynamically
+            if: startsWith(matrix.os, 'macos')
+            run: |
+              if [[ "${{ matrix.os }}" == "macos-13" ]]; then
+                echo "CONDA_BUILD_SYSROOT=/Applications/Xcode_14.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk" >> $GITHUB_ENV
+                sed -i '' 's|CONDA_BUILD_SYSROOT:.*|CONDA_BUILD_SYSROOT: /Applications/Xcode_14.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk|' ./conda-recipe/n88util/conda_build_config.yaml
+              elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+                XCODE_SDK=$(xcode-select -p)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
+                echo "CONDA_BUILD_SYSROOT=$XCODE_SDK" >> $GITHUB_ENV
+                sed -i '' "s|CONDA_BUILD_SYSROOT:.*|CONDA_BUILD_SYSROOT: $XCODE_SDK|" ./conda-recipe/n88util/conda_build_config.yaml
+              fi
 
           # - name: Add "conda deactivate" to the start of conda-recipe/n88util/build.sh
           #   if: matrix.os == 'macos-13'
