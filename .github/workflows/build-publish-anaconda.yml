@@ -17,26 +17,15 @@ jobs:
           matrix:
             # OS types: Windows x64, macOS 13 (last intel based runner), macOS latest (Apple silicon), and Ubuntu x64
             # ------------------------------------------------------
-            os: ["macos-13", "macos-latest"]
+            os: ["macos-13", "macos-latest", "windows-latest", "ubuntu-latest"]
             python-minor-version: [9]
 
         steps:
-          - name: Set CONDA_BUILD_SYSROOT (MacOS 13)
-            if: matrix.os == 'macos-13'
-            run: echo "CONDA_BUILD_SYSROOT=/Applications/Xcode_14.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk" >> $GITHUB_ENV
-
           - name: Checkout repo
             uses: actions/checkout@v4
             with:
               ref: kean/ci # UPDATE: Change to master branch when finished testing
               fetch-depth: 0 # Fetch all history for all branches and tags
-
-          - name: (Debug) Echo xcode-select -p
-            run: |
-              echo "xcode-select -p: $(xcode-select -p)"
-              echo "xcodebuild -showsdks: $(xcodebuild -showsdks)"
-              echo "xcodebuild -version: $(xcodebuild -version)"
-            shell: bash
 
           - name: Set CONDA_BUILD_SYSROOT dynamically
             if: startsWith(matrix.os, 'macos')
@@ -51,12 +40,6 @@ jobs:
                 echo "CONDA_BUILD_SYSROOT:" >> ./conda-recipe/n88util/conda_build_config.yaml
                 echo "  - $XCODE_SDK" >> ./conda-recipe/n88util/conda_build_config.yaml
               fi
-
-          - name: (Debug) Echo entire conda_build_config.yaml
-            run: |
-              echo "CONDA_BUILD_CONFIG:"
-              cat ./conda-recipe/n88util/conda_build_config.yaml
-            shell: bash
 
           - name: Fetch all tags
             run: git fetch --tags

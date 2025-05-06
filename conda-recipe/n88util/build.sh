@@ -1,11 +1,8 @@
 set -x
 
-# Print CONDA_BUILD_SYSROOT
-echo "CONDA_BUILD_SYSROOT before deactivating: ${CONDA_BUILD_SYSROOT}"
-
+# Deactivate any existing conda environment to avoid mismatches with build config
+# Without this, the build fails for MacOS-13 runner
 conda deactivate
-
-echo "CONDA_BUILD_SYSROOT after deactivating: ${CONDA_BUILD_SYSROOT}"
 
 # Create build directory
 mkdir build
@@ -45,4 +42,4 @@ ninja install -v
 # Run tests
 ctest -V
 
-conda deactivate
+conda activate
