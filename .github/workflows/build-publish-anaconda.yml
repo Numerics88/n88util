@@ -17,10 +17,19 @@ jobs:
           matrix:
             # OS types: Windows x64, macOS 13 (last intel based runner), macOS latest (Apple silicon), and Ubuntu x64
             # ------------------------------------------------------
-            os: ["macos-latest", "macos-13", "ubuntu-latest", "windows-latest"]
+            os: ["macos-latest", "macos-13"]
             python-minor-version: [9]
 
         steps:
+          - name: Download MacOSX10.9 SDK
+            if: matrix.os == 'macos-13'
+            run: |
+              curl -L https://github.com/phracker/MacOSX-SDKs/releases/download/10.13/MacOSX10.9.sdk.tar.xz -o MacOSX10.9.sdk.tar.xz
+              tar -xf MacOSX10.9.sdk.tar.xz
+              sudo mv MacOSX10.9.sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/
+          - name: Set CONDA_BUILD_SYSROOT
+            if: matrix.os == 'macos-13'
+            run: echo "CONDA_BUILD_SYSROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk" >> $GITHUB_ENV
           - name: Checkout repo
             uses: actions/checkout@v4
             with:
