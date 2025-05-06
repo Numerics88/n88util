@@ -21,9 +21,14 @@ jobs:
             python-minor-version: [9]
 
         steps:
-          - name: Set CONDA_BUILD_SYSROOT
+          - name: Set CONDA_BUILD_SYSROOT (MacOS 13)
             if: matrix.os == 'macos-13'
             run: echo "CONDA_BUILD_SYSROOT=/Applications/Xcode_14.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk" >> $GITHUB_ENV
+          
+          - name: Set CONDA_BUILD_SYSROOT (MacOS latest)
+            if: matrix.os == 'macos-latest'
+            run: echo "CONDA_BUILD_SYSROOT=/Applications/Xcode_15.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk" >> $GITHUB_ENV
+          
           - name: Checkout repo
             uses: actions/checkout@v4
             with:
