@@ -10,7 +10,7 @@ libcxx:
   - 14.0.6
 cxx_compiler_version:
   - 14.0.6                     # [osx]
-  - 12                         # [linux]   
+  - 12                         # [linux]
 clang_variant:
   - default
 channels:
