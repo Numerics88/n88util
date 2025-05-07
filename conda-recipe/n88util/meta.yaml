@@ -1,6 +1,6 @@
 
 package:
-  name: n88util-test
+  name: n88util
   version: {{ GIT_RELEASE_TAG | lower | replace("v","") }}
 
 source:
