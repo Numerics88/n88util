@@ -3,8 +3,10 @@
 Typical random collection of C++ classes and functions that do all the little things
 we need all the time.
 
-[![Build Status](https://dev.azure.com/babesler/n88/_apis/build/status/Numerics88.n88util?branchName=master)](https://dev.azure.com/babesler/n88/_build/latest?definitionId=6&branchName=master)
-[![Anaconda-Server Badge](https://anaconda.org/numerics88/n88util/badges/installer/conda.svg)](https://anaconda.org/numerics88/n88util)
+<!-- [![Build Status](https://dev.azure.com/babesler/n88/_apis/build/status/Numerics88.n88util?branchName=master)](https://dev.azure.com/babesler/n88/_build/latest?definitionId=6&branchName=master) -->
+[![Build and upload platform-specific conda packages](https://github.com/Numerics88/n88util/actions/workflows/build-publish-anaconda.yml/badge.svg?branch=master)](https://github.com/Numerics88/n88util/actions/workflows/build-and-upload-conda-packages.yml)
+[![Anaconda-Server Badge](https://anaconda.org/numerics88/n88util/badges/version.svg)](https://anaconda.org/numerics88/n88util)
+[![Anaconda-Server Badge](https://anaconda.org/numerics88/n88util/badges/platforms.svg)](https://anaconda.org/numerics88/n88util)
 
 ## Compiling and linking
 
@@ -26,6 +28,27 @@ ctest -V
 ```
 
 On Windows the procedure is a rather different: refer to CMake documentation.
+
+## CI/CD Pipeline
+
+This repository uses Github Actions to automate the build and deployment process. The pipeline is triggered under the following conditions:
+
+- **Build and Publish to Anaconda.org**
+  - Triggered when a new release is published on Github
+  - Builts platform-specific Conda packages for macOS x64, macOS arm64, Windows, and Linux
+  - Publishes the package to the [Numerics88 channel](https://anaconda.org/numerics88/n88util)
+
+### Workflow Requirements
+The following C++ compilers and SDKs are required during the build process to ensure compatibility with C++ library versions available on Conda's default channel:
+
+- **MacOS**
+  - C++ compiler version: >=12.0.0, <= 14.0.6
+  - Intel-based OSX (macos-13 runner): Requires Xcode 14.1
+- **Linux**
+  - Requires gcc 12
+- **Windows**
+  - Requires vs2015 (Visual Studio 2015)
+
 
 ## Notable classes
 
