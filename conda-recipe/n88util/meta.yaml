@@ -1,7 +1,6 @@
-
 package:
-  name: n88util
-  version: {{ GIT_DESCRIBE_TAG | lower | replace("v","") }}
+  name: n88util-test
+  version: {{ GIT_RELEASE_TAG | lower | replace("v","") }}
 
 source:
   path: ./../../
@@ -9,16 +8,20 @@ source:
 build:
   number: 0
 
-# Note, boost has an upperbound right now to hanlde cmake correctly
 requirements:
   build:
-    - {{ compiler('cxx') }}
-    - cmake >=3.1.0
-    - boost >=1.56,<=1.67
+    - cmake >=3.30.3
+    - boost >=1.56
     - ninja
     - gtest
+    - libcxx <=14.0.6
+    - {{ compiler('cxx') }}
+  host:
+    - libcxx <=14.0.6
   run:
     - boost >=1.56
+    - libcxx <=14.0.6
+    - python >=3.9
 
 about:
   home: https://github.com/Numerics88/n88util
