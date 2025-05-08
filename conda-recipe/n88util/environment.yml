@@ -8,3 +8,4 @@ dependencies:
   - boost >=1.56
   - ninja
   - gtest
+  - libcxx <=14.0.6
