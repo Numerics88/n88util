@@ -16,7 +16,6 @@ requirements:
     - ninja
     - gtest
     - {{ compiler('cxx') }}
-    - libcxx <=14.0.6
   host:
     - libcxx <=14.0.6 # [osx]
   run:
