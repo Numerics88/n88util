@@ -17,7 +17,7 @@ jobs:
           matrix:
             # OS types: Windows x64, macOS 13 (last intel based runner), macOS latest (Apple silicon), and Ubuntu x64
             # ------------------------------------------------------
-            os: ["macos-13", "macos-latest"]
+            os: ["macos-13", "macos-latest", "windows-latest", "ubuntu-latest"]
             python-minor-version: [9]
 
         steps:
@@ -53,7 +53,7 @@ jobs:
 
           - name: Set GIT_RELEASE_TAG # Fetch and set the latest release tag
             run: |
-              echo "GIT_RELEASE_TAG=4.0.0" >> $GITHUB_ENV
+              echo "GIT_RELEASE_TAG=3.0.0" >> $GITHUB_ENV
             shell: bash
             
           - name: Build and publish
