@@ -1,7 +1,7 @@
 
 package:
   name: n88util
-  version: {{ GIT_RELEASE_TAG | lower | replace("v","") }}
+  version: {{ GIT_DESCRIBE_TAG | lower | replace("v","") }}
 
 source:
   path: ./../../
@@ -18,9 +18,6 @@ requirements:
     - {{ compiler('cxx') }}
   host:
     - libcxx <=14.0.6 # [osx]
-  run:
-    - boost >=1.56
-    - python >=3.9
 
 about:
   home: https://github.com/Numerics88/n88util
