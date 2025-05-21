@@ -16,8 +16,8 @@ requirements:
     - ninja
     - gtest
     - {{ compiler('cxx') }}
-  host:
-    - libcxx <=14.0.6 # [osx]
+  # host:
+  #   - libcxx <=14.0.6 # [osx]
 
 about:
   home: https://github.com/Numerics88/n88util
