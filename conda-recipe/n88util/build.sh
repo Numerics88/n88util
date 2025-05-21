@@ -1,12 +1,5 @@
 set -x
 
-# Deactivate any existing conda environment to avoid mismatches with build config
-# Without this, the build fails for MacOS-13 runner with: unsupported tapi file type '!tapi-tbd' in YAML file
-# conda deactivate
-
-# Echo the current environment
-echo "Current environment: $(conda info --envs | grep '*' | awk '{print $1}')"
-
 # Create build directory
 mkdir build
 cd build
@@ -44,5 +37,3 @@ ninja install -v
 
 # Run tests
 ctest -V
-
-# conda activate

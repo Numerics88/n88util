@@ -8,4 +8,5 @@ cxx_compiler:
   - vs2019                     # [win]
 channels:
   - friedchickean
+  - conda-forge
   - defaults
