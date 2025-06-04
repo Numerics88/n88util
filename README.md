@@ -4,7 +4,7 @@ Typical random collection of C++ classes and functions that do all the little th
 we need all the time.
 
 <!-- [![Build Status](https://dev.azure.com/babesler/n88/_apis/build/status/Numerics88.n88util?branchName=master)](https://dev.azure.com/babesler/n88/_build/latest?definitionId=6&branchName=master) -->
-[![Build and upload platform-specific conda packages](https://github.com/Numerics88/n88util/actions/workflows/build-and-upload-conda-packages.yml/badge.svg?branch=master)](https://github.com/Numerics88/n88util/actions/workflows/build-and-upload-conda-packages.yml)
+[![Conda Build And Publish](https://github.com/Numerics88/n88util/actions/workflows/build-publish-anaconda.yml/badge.svg?branch=master)](https://github.com/Numerics88/n88util/actions/workflows/build-publish-anaconda.yml)
 [![Anaconda-Server Badge](https://anaconda.org/numerics88/n88util/badges/version.svg)](https://anaconda.org/numerics88/n88util)
 [![Anaconda-Server Badge](https://anaconda.org/numerics88/n88util/badges/platforms.svg)](https://anaconda.org/numerics88/n88util)
 
