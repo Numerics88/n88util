@@ -1,0 +1,30 @@
+name: Test Windows C++ Compiler
+
+on:
+    workflow_dispatch: # Allows manual execution of the workflow
+
+jobs:
+  test_cxx_compiler:
+    name: Test C++ Compiler on Windows
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Look for MSVC path
+        run: |
+          dir "C:\Program Files (x86)\Microsoft Visual Studio"
+        shell: cmd
+
+      - name: Setup MSVC Environment (Windows)
+        if: runner.os == 'Windows'
+        run: |
+            for /f "usebackq tokens=*" %%i in (`"C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -latest -property installationPath`) do set VS_PATH=%%i
+            call "%VS_PATH%\VC\Auxiliary\Build\vcvars64.bat"
+            set >> %GITHUB_ENV%
+        shell: cmd
+
+      - name: Print Environment Variables
+        run: set
+        shell: cmd
