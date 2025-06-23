@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2016 Eric Nodwell
+// Copyright (c) Eric Nodwell
 // See LICENSE for details.
 
 #ifndef N88UTIL_array_hpp_INCLUDED

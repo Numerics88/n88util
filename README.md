@@ -106,8 +106,8 @@ programs without the speed impact of mutexes or atomic operations.
 
 ## Authors and Contributors
 
-n88util is maintained and developed by Numerics88
-Solutions Ltd. (http://numerics88.com) The original author is Eric Nodwell (eric.nodwell@numerics88.com).
+n88util is maintained and developed by Numerics88 Solutions (http://numerics88.com).
+The original author is Eric Nodwell.
 
 ## Licence
 
