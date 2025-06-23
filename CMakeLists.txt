@@ -1,9 +1,9 @@
-cmake_minimum_required (VERSION 3.5)
+cmake_minimum_required (VERSION 3.20)
 project (n88util)
 
 # === Versioning
 
-set(N88UTIL_MAJOR_VERSION 2)
+set(N88UTIL_MAJOR_VERSION 3)
 set(N88UTIL_MINOR_VERSION 0)
 set(N88UTIL_PATCH_VERSION 0)
 set(N88UTIL_VERSION
